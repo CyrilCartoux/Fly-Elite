@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import {CalendarModule} from 'primeng/calendar';
+import {DropdownModule} from 'primeng/dropdown';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import {CardModule} from 'primeng/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,13 +23,18 @@ import { CheckInComponent } from './check-in/check-in.component';
     SearchFlightComponent,
     SearchResultsComponent,
     PublicityComponent,
-    CheckInComponent,
+    CheckInComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CalendarModule,
+    ToggleButtonModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

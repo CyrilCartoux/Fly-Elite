@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckInComponent implements OnInit {
 
-  constructor() { }
+  checkInForm: FormGroup;
+
+  constructor(
+    private formbuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    this.checkInForm = this.formbuilder.group({
+      flightNumber: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required]
+    });
+  }
+
+  onSubmitCheckInForm() {
+    console.log(this.checkInForm.value);
   }
 
 }
