@@ -5,6 +5,6 @@ export interface FlightToSearch {
     arrival: string;
     dates: Date[];
     nbrePersonnes?: number;
-    noEscale: boolean;
-    category: Category;
+    noEscale?: boolean;
+    category?: Category;
 }

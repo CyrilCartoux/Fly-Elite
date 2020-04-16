@@ -4,6 +4,8 @@ import { Category } from './../../interfaces/category';
 import { Component, OnInit } from '@angular/core';
 import { Airport } from 'src/app/interfaces/airport';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Flight } from 'src/app/interfaces/flight';
 
 @Component({
   selector: 'app-search-flight',
@@ -14,8 +16,6 @@ export class SearchFlightComponent implements OnInit {
 
   // Departure and landing :
   airports: Airport[];
-  selectedDepartureAirport;
-  selectedArrivalAirport;
 
   // Dates :
   rangeDates: Date[];
@@ -42,12 +42,13 @@ export class SearchFlightComponent implements OnInit {
 
 
   constructor(
-    private flightService: FlightService
+    private flightService: FlightService,
+    private router: Router
   ) {
     this.airports = [
       { label: 'LAX', value: 'Los Angeles' },
       { label: 'DXB', value: 'Dubaï' },
-      { label: 'ATL', value: 'Atltanta' },
+      { label: 'ATL', value: 'Atlanta' },
       { label: 'PEK', value: 'Beijing' },
       { label: 'HND', value: 'Tokyo' },
       { label: 'ORD', value: 'Chicago' },
@@ -70,7 +71,7 @@ export class SearchFlightComponent implements OnInit {
   ngOnInit() {
 
     // Formulaire :
-    this.flightForm = new FormGroup ({
+    this.flightForm = new FormGroup({
       departure: new FormControl(),
       arrival: new FormControl(),
       dates: new FormControl(),
@@ -80,7 +81,7 @@ export class SearchFlightComponent implements OnInit {
     });
 
 
-
+    // Calendrier :
     this.es = {
       firstDayOfWeek: 1,
       dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
@@ -113,9 +114,8 @@ export class SearchFlightComponent implements OnInit {
 
   onSubmitFlightForm() {
     this.flightToSearch = this.flightForm.value;
-    const dates = this.flightForm.get('dates').value;
-
-    console.log(this.flightService.compareDate(dates[0], dates[1]));
+    this.flightService.findFlight(this.flightToSearch);
+    this.router.navigate(['search/results']);
   }
 
 

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,6 +31,7 @@ import { CheckInComponent } from './check-in/check-in.component';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    RouterModule,
     CalendarModule,
     ToggleButtonModule,
     ReactiveFormsModule,

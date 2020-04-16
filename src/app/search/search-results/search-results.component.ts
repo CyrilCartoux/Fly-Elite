@@ -1,3 +1,5 @@
+import { FlightService } from './../../services/flight.service';
+import { Flight } from './../../interfaces/flight';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchResultsComponent implements OnInit {
 
-  constructor() { }
+  flights: Flight[];
+
+  constructor(
+    private flightService: FlightService
+  ) { }
 
   ngOnInit(): void {
+    this.flights =  this.flightService.getFoundedFlights();
+    console.log(this.flights);
   }
 
 }

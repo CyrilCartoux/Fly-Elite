@@ -1,13 +1,14 @@
 export interface Flight {
-    destination: string;
-    flightNumber: number;
+    departure: string;
+    arrival: string;
+    flightNumber?: number;
 
-    departureTime: number;
-    landingTime: number;
-    departureDay: number;
-    landingDay: number;
+    departureTime?: Date;
+    landingTime?: Date;
 
-    flightTime: number;
-    company: string;
-    noEscales: boolean;
+    dates: Date[];
+
+    flightTime?: number;
+    company?: string;
+    noEscales?: boolean;
 }
