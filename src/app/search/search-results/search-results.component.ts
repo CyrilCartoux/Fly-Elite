@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { FlightService } from './../../services/flight.service';
 import { Flight } from './../../interfaces/flight';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-results',
@@ -12,12 +14,17 @@ export class SearchResultsComponent implements OnInit {
   flights: Flight[];
 
   constructor(
-    private flightService: FlightService
+    private flightService: FlightService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.flights =  this.flightService.getFoundedFlights();
-    console.log(this.flights);
+  }
+
+  onSelectFlight(index: number) {
+    this.flightService.getFlightById(index);
+    this.router.navigate(['/book-flight']);
   }
 
 }

@@ -1,7 +1,8 @@
+import { BookFlightComponent } from './book-flight/book-flight.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { CheckInComponent } from './check-in/check-in.component';
 import { SearchFlightComponent } from './search/search-flight/search-flight.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
@@ -11,6 +12,7 @@ const routes: Routes = [
     {path: 'results', component: SearchResultsComponent}
   ]},
   { path: 'checkin', component: CheckInComponent},
+  { path: 'book-flight', component: BookFlightComponent},
   { path: '**', redirectTo: 'search', pathMatch: 'full'}
 ];
 

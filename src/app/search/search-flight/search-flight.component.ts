@@ -14,6 +14,9 @@ import { Flight } from 'src/app/interfaces/flight';
 })
 export class SearchFlightComponent implements OnInit {
 
+  // Found flight ?:
+  foundflight = false;
+
   // Departure and landing :
   airports: Airport[];
 
@@ -37,7 +40,6 @@ export class SearchFlightComponent implements OnInit {
 
   // Formulaire:
   flightForm: FormGroup;
-  flightToSearch: FlightToSearch;
 
 
 
@@ -113,9 +115,13 @@ export class SearchFlightComponent implements OnInit {
   }
 
   onSubmitFlightForm() {
-    this.flightToSearch = this.flightForm.value;
-    this.flightService.findFlight(this.flightToSearch);
-    this.router.navigate(['search/results']);
+
+    if (this.flightService.findFlight(this.flightForm.value)) {
+      this.foundflight = true;
+      this.router.navigate(['search/results']);
+    } else {
+      alert('Nous n\'avons pas trouvé de vols correspondants a votre recheche ...');
+    }
   }
 
 

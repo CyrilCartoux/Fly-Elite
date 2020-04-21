@@ -1,7 +1,7 @@
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable  } from '@angular/core';
 
 
 @Injectable({
@@ -11,6 +11,8 @@ export class FlightService {
 
   flights: Flight[];
   flightsFounded: Flight[];
+  flightSelected = new BehaviorSubject<Flight>(null);
+
 
   constructor() {
     this.flights = [{
@@ -68,7 +70,7 @@ export class FlightService {
     };
   }
 
-  findFlight(flightToSearch: FlightToSearch) {
+  findFlight(flightToSearch: FlightToSearch): boolean {
     const flights = [];
     for (const flight of this.flights) {
       if (JSON.stringify(this.getFlightInfo(flight)) === JSON.stringify(this.getFlightInfo(flightToSearch))) {
@@ -76,10 +78,23 @@ export class FlightService {
       }
     }
     this.flightsFounded = flights;
+    if (flights.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   getFoundedFlights(): Flight[] {
-    return this.flightsFounded;
+    if (this.flightsFounded === undefined) {
+      return;
+    } else {
+      return this.flightsFounded;
+    }
+  }
+
+  getFlightById(index: number) {
+    this.flightSelected.next(this.flightsFounded[index]);
   }
 
 

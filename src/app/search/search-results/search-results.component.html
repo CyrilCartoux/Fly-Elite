@@ -1,4 +1,4 @@
-<div class="container mb-3" *ngFor="let flight of flights">
+<div class="container mb-3" *ngFor="let flight of flights; let i = index">
 <hr style="background-color: white;">
    
     <div class="row">
@@ -35,7 +35,7 @@
         </div>
         <div class="col-2 verticalLine">
             <h6>Meilleur tarif : </h6>
-            <button class="btn btn-primary">121 € </button>
+            <a class="btn btn-primary" (click)='onSelectFlight(i)'>121 € </a>
         </div>
     </div>
 </div>
