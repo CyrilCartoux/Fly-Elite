@@ -61,4 +61,8 @@ export class BookFlightComponent implements OnInit {
     this.users.push(this.newUser());
   }
 
+  deleteUser(index: number) {
+      this.users.removeAt(index);
+  }
+
 }
