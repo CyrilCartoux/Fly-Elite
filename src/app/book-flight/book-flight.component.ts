@@ -1,3 +1,4 @@
+import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
 import { FlightService } from './../services/flight.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class BookFlightComponent implements OnInit {
 
   flight: Flight;
+  userFlightForm: FlightToSearch;
 
   constructor(
     private flightService: FlightService
@@ -22,6 +24,10 @@ export class BookFlightComponent implements OnInit {
         console.log(f);
       }
     );
+
+    this.userFlightForm = this.flightService.getUserFlightForm();
+    console.log(this.userFlightForm);
+    console.log(this.userFlightForm.nbrePersonnes);
   }
 
 }

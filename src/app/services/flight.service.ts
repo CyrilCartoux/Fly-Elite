@@ -1,4 +1,4 @@
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
 import { Injectable  } from '@angular/core';
@@ -10,8 +10,15 @@ import { Injectable  } from '@angular/core';
 export class FlightService {
 
   flights: Flight[];
+
+  // vols correspondants a la recherche :
   flightsFounded: Flight[];
+
+  // vol selectionné par l'user dans search/results :
   flightSelected = new BehaviorSubject<Flight>(null);
+
+  // formulaire recherche de l'user :
+  userFlightForm: FlightToSearch;
 
 
   constructor() {
@@ -71,6 +78,7 @@ export class FlightService {
   }
 
   findFlight(flightToSearch: FlightToSearch): boolean {
+    this.userFlightForm = flightToSearch;
     const flights = [];
     for (const flight of this.flights) {
       if (JSON.stringify(this.getFlightInfo(flight)) === JSON.stringify(this.getFlightInfo(flightToSearch))) {
@@ -97,15 +105,19 @@ export class FlightService {
     this.flightSelected.next(this.flightsFounded[index]);
   }
 
+  getUserFlightForm(): FlightToSearch {
+    return this.userFlightForm;
+  }
+
 
 
   // compare departureDate()
-  compareDates(date1: Date, date2: Date): boolean {
+  // compareDates(date1: Date, date2: Date): boolean {
 
-    const d1 = new Date(date1);
-    const d2 = new Date(date2);
+  //   const d1 = new Date(date1);
+  //   const d2 = new Date(date2);
 
-    return d1.getTime() === d2.getTime();
-  }
+  //   return d1.getTime() === d2.getTime();
+  // }
 
 }

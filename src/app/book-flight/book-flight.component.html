@@ -1,4 +1,64 @@
-<div class="container">
-    <h3>Voici les détails de votre vol : </h3>
+<div class="container-fluid text-center">
+    <h2>Votre voyage a destination de {{ flight.arrival }}</h2>
 </div>
 
+<hr style="background-color: white;">
+
+<div class="container mb-3">
+
+    <div class="row">
+        <div class="col-12">
+            <p>Votre départ : Aéroport de {{ flight.departure }} à {{ flight.departureTime | date:'HH:mm' }}. </p>
+            <p>Le {{flight.dates[0] | date:'dd/MM'}} </p>
+            <p>Votre arrivée : - {{ flight.arrival }} à {{ flight.landingTime | date:'HH:mm' }} </p>
+            <p>Le {{flight.dates[1] | date:'dd/MM'}}</p>
+        </div>
+        <div class="col-12" *ngIf="userFlightForm.noEscale">
+            <i class="fas fa-plane"></i> Vol direct
+        </div>
+        <div class="col-12" *ngIf="!userFlightForm.noEscale">
+            <i class="fas fa-plane"></i> Vol AVEC escales
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <div class="row d-flex justify-content-around">
+                <div class="col-2">
+                    <h6>Numéro du vol : </h6>
+                    <p>{{ flight.flightNumber }}</p>
+                </div>
+
+                <div class="col-4 text-center">
+                    <h6>Compagnie : </h6>
+                    <p>{{ flight.company }}</p>
+                </div>
+                <i class="fas fa-arrow"></i>
+                <div class="col-4 text-center">
+                    <h6>Catégorie de vol : </h6>
+                    <p> {{userFlightForm.category.name}} </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<hr style="background-color: white;">
+
+<div class="container text-center pb-5">
+    <h4>Ajouter des passagers : </h4>
+    <br>
+    <form>
+        <div class="form-row d-flex justify-content-center align-content-center">
+          <div class="col-5">
+            <input type="text" class="form-control" placeholder="Email">
+          </div>
+          <div class="col-2">
+            <input type="text" class="form-control" placeholder="Nom">
+          </div>
+          <div class="col-2">
+            <input type="text" class="form-control" placeholder="Prénom">
+          </div>
+        </div>
+      </form>
+</div>
