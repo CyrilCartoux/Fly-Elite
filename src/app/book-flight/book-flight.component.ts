@@ -1,3 +1,5 @@
+import { User } from './../interfaces/user';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
 import { FlightService } from './../services/flight.service';
@@ -13,21 +15,50 @@ export class BookFlightComponent implements OnInit {
   flight: Flight;
   userFlightForm: FlightToSearch;
 
+  addUserForm: FormGroup;
+
   constructor(
-    private flightService: FlightService
+    private flightService: FlightService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.flightService.flightSelected.subscribe(
       (f: Flight) => {
         this.flight = f;
-        console.log(f);
       }
     );
 
     this.userFlightForm = this.flightService.getUserFlightForm();
-    console.log(this.userFlightForm);
-    console.log(this.userFlightForm.nbrePersonnes);
+    this.initForm();
+
+
+  }
+
+  private initForm() {
+
+    this.addUserForm = this.formBuilder.group({
+      users: this.formBuilder.array([
+        this.newUser()
+      ])
+    });
+
+  }
+
+  get users() {
+    return this.addUserForm.get('users') as FormArray;
+  }
+
+  newUser(): FormGroup {
+    return this.formBuilder.group({
+      email: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required]
+    });
+  }
+
+  addMoreUsers() {
+    this.users.push(this.newUser());
   }
 
 }

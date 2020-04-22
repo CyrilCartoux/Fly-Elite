@@ -1,4 +1,4 @@
-<div class="container-fluid text-center">
+<div class="container-fluid text-center p-3">
     <h2>Votre voyage a destination de {{ flight.arrival }}</h2>
 </div>
 
@@ -48,17 +48,27 @@
 <div class="container text-center pb-5">
     <h4>Ajouter des passagers : </h4>
     <br>
-    <form>
-        <div class="form-row d-flex justify-content-center align-content-center">
-          <div class="col-5">
-            <input type="text" class="form-control" placeholder="Email">
-          </div>
-          <div class="col-2">
-            <input type="text" class="form-control" placeholder="Nom">
-          </div>
-          <div class="col-2">
-            <input type="text" class="form-control" placeholder="Prénom">
-          </div>
+    <form [formGroup]="addUserForm">
+        <div formArrayName="users">
+            <div class="row p-2" *ngFor="let user of users.controls; let i = index;" [formGroupName]="i">
+                <div class="col-6">
+                    <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
+                </div>
+                <div class="col-2">
+                    <input type="text" name="nom" class="form-control" placeholder="Nom" formControlName="nom">
+                </div>
+                <div class="col-2">
+                    <input type="text" name="prenom" class="form-control" placeholder="Prénom" formControlName="prenom">
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-success" (click)="addMoreUsers()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-      </form>
+    </form>
+</div>
+<div class="row d-flex align-content-center justify-content-center p-3">
+    <button class="btn btn-success btn-lg">Valider et payer</button>
 </div>
