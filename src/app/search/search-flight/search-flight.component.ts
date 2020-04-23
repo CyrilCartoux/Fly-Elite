@@ -1,11 +1,9 @@
 import { FlightService } from './../../services/flight.service';
-import { FlightToSearch } from './../../interfaces/flight-to-search';
 import { Category } from './../../interfaces/category';
 import { Component, OnInit } from '@angular/core';
 import { Airport } from 'src/app/interfaces/airport';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Flight } from 'src/app/interfaces/flight';
 
 @Component({
   selector: 'app-search-flight',

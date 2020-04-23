@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth/auth/auth.guard';
 import { AuthComponent } from './auth/auth/auth.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
@@ -15,8 +16,8 @@ const routes: Routes = [
       { path: 'results', component: SearchResultsComponent }
     ]
   },
-  { path: 'checkin', component: CheckInComponent },
-  { path: 'book-flight', component: BookFlightComponent },
+  { path: 'checkin', component: CheckInComponent, canActivate: [AuthGuard] },
+  { path: 'book-flight', component: BookFlightComponent, canActivate: [AuthGuard] },
   { path: 'auth', component: AuthComponent},
   { path: '**', redirectTo: 'search', pathMatch: 'full' }
 ];

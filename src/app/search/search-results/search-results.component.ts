@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { FlightService } from './../../services/flight.service';
 import { Flight } from './../../interfaces/flight';
 import { Component, OnInit, Output } from '@angular/core';

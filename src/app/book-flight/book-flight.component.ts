@@ -1,4 +1,4 @@
-import { User } from './../interfaces/user';
+import { Users } from './../interfaces/user';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, NgForm } from '@angular/forms';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
@@ -17,7 +17,7 @@ export class BookFlightComponent implements OnInit {
 
   addUserForm: FormGroup;
 
-  passengers: User[] = [];
+  passengers: Users[] = [];
 
   constructor(
     private flightService: FlightService,

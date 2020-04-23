@@ -1,8 +1,10 @@
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
@@ -18,6 +20,8 @@ import { PublicityComponent } from './publicity/publicity.component';
 import { CheckInComponent } from './check-in/check-in.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { AuthComponent } from './auth/auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -28,21 +32,29 @@ import { AuthComponent } from './auth/auth/auth.component';
     PublicityComponent,
     CheckInComponent,
     BookFlightComponent,
-    AuthComponent
+    AuthComponent,
+    LoadingSpinnerComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     RouterModule,
+    HttpClientModule,
     CalendarModule,
     ToggleButtonModule,
     ReactiveFormsModule,
     DropdownModule,
     CardModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
