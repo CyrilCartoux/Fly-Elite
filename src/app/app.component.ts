@@ -21,7 +21,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.autoLogIn();
-    this.data.storeFlights();
+
+    this.data.getFlights();
+
+    this.data.flightsSubject.subscribe(
+      (flight) => {
+        console.log("flights recupéré depuis le serveur : " );
+      }
+    );
   }
 
 

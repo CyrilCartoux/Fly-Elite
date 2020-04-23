@@ -1,3 +1,4 @@
+import { DataStorageService } from './data-storage.service';
 import { BehaviorSubject } from 'rxjs';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
@@ -9,7 +10,7 @@ import { Injectable  } from '@angular/core';
 })
 export class FlightService {
 
-  flights: Flight[];
+  flights: Flight[] = [];
 
   // vols correspondants a la recherche :
   flightsFounded: Flight[];
@@ -21,7 +22,9 @@ export class FlightService {
   userFlightForm: FlightToSearch;
 
 
-  constructor() {
+  constructor(
+    private dataStorage: DataStorageService
+  ) {
     this.flights = [{
       departure: 'Marseille',
       arrival: 'Amsterdam',
