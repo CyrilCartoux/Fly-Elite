@@ -1,5 +1,5 @@
 import { User } from './../interfaces/user';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, NgForm } from '@angular/forms';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
 import { FlightService } from './../services/flight.service';
@@ -17,6 +17,8 @@ export class BookFlightComponent implements OnInit {
 
   addUserForm: FormGroup;
 
+  passengers: User[] = [];
+
   constructor(
     private flightService: FlightService,
     private formBuilder: FormBuilder
@@ -32,17 +34,14 @@ export class BookFlightComponent implements OnInit {
     this.userFlightForm = this.flightService.getUserFlightForm();
     this.initForm();
 
-
   }
 
   private initForm() {
-
     this.addUserForm = this.formBuilder.group({
       users: this.formBuilder.array([
         this.newUser()
       ])
     });
-
   }
 
   get users() {
@@ -63,6 +62,11 @@ export class BookFlightComponent implements OnInit {
 
   deleteUser(index: number) {
       this.users.removeAt(index);
+  }
+
+  onSubmit() {
+    this.passengers.push(...this.addUserForm.value.users);
+    console.log(this.passengers);
   }
 
 }

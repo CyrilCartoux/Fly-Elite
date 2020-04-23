@@ -1,7 +1,11 @@
+<div class="container-fluid text-center pt-5 pb-2">
+    <h4><i class="fas fa-plane-departure"> </i> Nos vols disponibles : </h4>
+</div>
+
 <div class="container mb-3" *ngFor="let flight of flights; let i = index">
 <hr style="background-color: white;">
    
-    <div class="row">
+    <div class="row m-0">
         <div class="col-12">
             {{ flight.departure }} - {{ flight.arrival }}
         </div>
@@ -9,9 +13,9 @@
             <i class="fas fa-plane"></i> Vol direct :
         </div>
     </div>
-    <div class="row" style="background-color: white;">
+    <div class="row m-0" style="background-color: white;">
         <div class="col-10">
-            <div class="row d-flex justify-content-around">
+            <div class="row m-0 d-flex justify-content-around">
                 <div class="col-2">
                     <h6>Horaires : </h6>
                     <p>Départ : {{ flight.departureTime | date:'dd/MM HH:mm'}}</p>

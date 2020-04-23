@@ -17,6 +17,7 @@ import { SearchResultsComponent } from './search/search-results/search-results.c
 import { PublicityComponent } from './publicity/publicity.component';
 import { CheckInComponent } from './check-in/check-in.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
+import { AuthComponent } from './auth/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BookFlightComponent } from './book-flight/book-flight.component';
     SearchResultsComponent,
     PublicityComponent,
     CheckInComponent,
-    BookFlightComponent
+    BookFlightComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
