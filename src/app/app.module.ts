@@ -22,6 +22,7 @@ import { BookFlightComponent } from './book-flight/book-flight.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
+import { UserAccountComponent } from './user-account/user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AlertComponent } from './shared/alert/alert.component';
     BookFlightComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    AlertComponent
+    AlertComponent,
+    UserAccountComponent
   ],
   imports: [
     BrowserModule,
