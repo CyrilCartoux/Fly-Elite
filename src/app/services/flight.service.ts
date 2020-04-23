@@ -101,6 +101,10 @@ export class FlightService {
     }
   }
 
+  getAllFlights() {
+    return this.flights;
+  }
+
   getFlightById(index: number) {
     this.flightSelected.next(this.flightsFounded[index]);
   }
