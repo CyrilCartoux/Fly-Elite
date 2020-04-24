@@ -1,1 +1,17 @@
-<p>user-account works!</p>
+<div class="container">
+    <h3 class="first">Gérer mon compte</h3>
+    <hr style="background-color: white;">
+    <div class="row">
+
+        <div class="col-4">
+            <div class="container p-3">
+
+                <p-menu [model]="items"></p-menu>
+
+            </div>
+        </div>
+        <div class="col-8">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

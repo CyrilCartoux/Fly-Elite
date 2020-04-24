@@ -10,6 +10,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {CardModule} from 'primeng/card';
+import {MenuModule} from 'primeng/menu';
 
 
 
@@ -25,6 +26,8 @@ import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { UserAccountComponent } from './user-account/user-account/user-account.component';
+import { UserFlightComponent } from './user-account/user-flight/user-flight.component';
+import { EditComponent } from './user-account/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { UserAccountComponent } from './user-account/user-account/user-account.c
     AuthComponent,
     LoadingSpinnerComponent,
     AlertComponent,
-    UserAccountComponent
+    UserAccountComponent,
+    UserFlightComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,8 @@ import { UserAccountComponent } from './user-account/user-account/user-account.c
     ToggleButtonModule,
     ReactiveFormsModule,
     DropdownModule,
-    CardModule
+    CardModule,
+    MenuModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

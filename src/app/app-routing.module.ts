@@ -1,3 +1,5 @@
+import { EditComponent } from './user-account/edit/edit.component';
+import { UserFlightComponent } from './user-account/user-flight/user-flight.component';
 import { UserAccountComponent } from './user-account/user-account/user-account.component';
 import { AuthGuard } from './auth/auth/auth.guard';
 import { AuthComponent } from './auth/auth/auth.component';
@@ -19,8 +21,14 @@ const routes: Routes = [
   },
   { path: 'checkin', component: CheckInComponent, canActivate: [AuthGuard] },
   { path: 'book-flight', component: BookFlightComponent, canActivate: [AuthGuard] },
-  { path: 'account', component: UserAccountComponent, canActivate: [AuthGuard]},
-  { path: 'auth', component: AuthComponent},
+  {
+    path: 'account', component: UserAccountComponent, canActivate: [AuthGuard],
+    children: [
+      { path: 'flights', component: UserFlightComponent },
+      { path: 'edit', component: EditComponent }
+    ]
+  },
+  { path: 'auth', component: AuthComponent },
   { path: '**', redirectTo: 'search', pathMatch: 'full' }
 ];
 
