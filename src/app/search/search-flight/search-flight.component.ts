@@ -113,7 +113,6 @@ export class SearchFlightComponent implements OnInit {
   }
 
   onSubmitFlightForm() {
-
     if (this.flightService.findFlight(this.flightForm.value)) {
       this.foundflight = true;
       this.router.navigate(['search/results']);

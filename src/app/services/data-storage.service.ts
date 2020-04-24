@@ -2,7 +2,7 @@ import { Flight } from './../interfaces/flight';
 import { FlightService } from './flight.service';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,7 @@ export class DataStorageService {
 
   flightsSubject = new Subject<Flight[]>();
 
-  constructor(
-    // private flightService: FlightService
-  ) {
-    // this.flights = this.flightService.getAllFlights();
-  }
+  constructor() { }
 
   storeFlights() {
     for (const flight of this.flights) {
@@ -39,12 +35,12 @@ export class DataStorageService {
   }
 
   getFlights() {
-    firebase.database().ref('flights').on('value', (data) => {
-      console.log(data.val())
-      this.flights = data.val();
-      this.emitFlights();
+    const query = firebase.database().ref('flights');
+    query.on('value', (snapshot) => {
+      this.flightsSubject.next(Object.values(snapshot.val()));
     });
   }
+
 
   emitFlights() {
     this.flightsSubject.next(this.flights);

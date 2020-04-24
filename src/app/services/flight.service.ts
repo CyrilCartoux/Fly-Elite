@@ -2,7 +2,7 @@ import { DataStorageService } from './data-storage.service';
 import { BehaviorSubject } from 'rxjs';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
-import { Injectable  } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 
 @Injectable({
@@ -25,69 +25,83 @@ export class FlightService {
   constructor(
     private dataStorage: DataStorageService
   ) {
-    this.flights = [{
-      departure: 'Marseille',
-      arrival: 'Amsterdam',
-      flightNumber: 1,
-      departureTime: new Date(2020, 3, 22, 9),
-      landingTime: new Date(2020, 3, 22, 13),
-      dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-      flightTime: 4,
-      company: 'AirFrance',
-      noEscales: true
-    },
-    {
-      departure: 'Los Angeles',
-      arrival: 'Dubaï',
-      flightNumber: 1,
-      departureTime: new Date(2020, 3, 22, 9),
-      landingTime: new Date(2020, 3, 22, 13),
-      dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-      flightTime: 4,
-      company: 'AirFrance',
-      noEscales: true
-    },
-    {
-      departure: 'Los Angeles',
-      arrival: 'Dubaï',
-      flightNumber: 1,
-      departureTime: new Date(2020, 3, 22, 15),
-      landingTime: new Date(2020, 3, 23, 17),
-      dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-      flightTime: 4,
-      company: 'AirFrance',
-      noEscales: true
-    },
-    {
-      departure: 'Atlanta',
-      arrival: 'Tokyo',
-      flightNumber: 1,
-      departureTime: new Date(2020, 3, 22, 9),
-      landingTime: new Date(2020, 3, 22, 13),
-      dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-      flightTime: 4,
-      company: 'AirFrance',
-      noEscales: true
-    }
-    ];
+    // fetch and store all the flights from firebase
+    this.dataStorage.flightsSubject.subscribe(
+      (data: Flight[]) => {
+        this.flights = data;
+        console.log(this.flights);
+      }
+    );
+
+    // this.flights = [{
+    //   departure: 'Marseille',
+    //   arrival: 'Amsterdam',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 3, 22, 9),
+    //   landingTime: new Date(2020, 3, 22, 13),
+    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // },
+    // {
+    //   departure: 'Los Angeles',
+    //   arrival: 'Dubaï',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 3, 22, 9),
+    //   landingTime: new Date(2020, 3, 22, 13),
+    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // },
+    // {
+    //   departure: 'Los Angeles',
+    //   arrival: 'Dubaï',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 3, 22, 15),
+    //   landingTime: new Date(2020, 3, 23, 17),
+    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // },
+    // {
+    //   departure: 'Atlanta',
+    //   arrival: 'Tokyo',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 3, 22, 9),
+    //   landingTime: new Date(2020, 3, 22, 13),
+    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // }
+    // ];
   }
 
-  getFlightInfo(flight: Flight): FlightToSearch {
+  getFlightInfo(flight) {
     return {
       departure: flight.departure,
       arrival: flight.arrival,
-      dates: flight.dates
+      dates: flight.dates.toLocaleString()
     };
   }
 
-  findFlight(flightToSearch: FlightToSearch): boolean {
+  findFlight(flightToSearch: FlightToSearch) {
     this.userFlightForm = flightToSearch;
     const flights = [];
-    for (const flight of this.flights) {
-      if (JSON.stringify(this.getFlightInfo(flight)) === JSON.stringify(this.getFlightInfo(flightToSearch))) {
-        flights.push(flight);
+
+    this.flights.forEach((elt: Flight) => {
+
+      if (JSON.stringify(this.getFlightInfo(elt)) === JSON.stringify(this.getFlightInfo(flightToSearch))) {
+        flights.push(elt);
       }
-    }
+
+    });
+
+    console.log(flights);
+
     this.flightsFounded = flights;
     if (flights.length === 0) {
       return false;
