@@ -1,5 +1,4 @@
-import { Router } from '@angular/router';
-// import { AuthService, AuthResponse } from './../auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -19,7 +18,8 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +30,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmitForm(form: NgForm) {
+    // const returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     this.isLoading = true;
     let authObs: Observable<AuthResponse>;
 
@@ -43,7 +44,7 @@ export class AuthComponent implements OnInit {
       (resData) => {
         this.isLoading = false;
         console.log(resData);
-        this.router.navigate(['/search']);
+        this.router.navigate(['/book-flight']);
       },
       (errorMessage) => {
         this.error = errorMessage;
