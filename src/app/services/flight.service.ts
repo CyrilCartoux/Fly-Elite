@@ -24,63 +24,18 @@ export class FlightService {
 
   constructor(
     private dataStorage: DataStorageService
-  ) {
-    // fetch and store all the flights from firebase
+  ) { }
+  
+  // fetch from firebase
+  fetchFlights() {
     this.dataStorage.flightsSubject.subscribe(
       (data: Flight[]) => {
         this.flights = data;
-        console.log(this.flights);
       }
     );
-
-    // this.flights = [{
-    //   departure: 'Marseille',
-    //   arrival: 'Amsterdam',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 3, 22, 9),
-    //   landingTime: new Date(2020, 3, 22, 13),
-    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // },
-    // {
-    //   departure: 'Los Angeles',
-    //   arrival: 'Dubaï',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 3, 22, 9),
-    //   landingTime: new Date(2020, 3, 22, 13),
-    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // },
-    // {
-    //   departure: 'Los Angeles',
-    //   arrival: 'Dubaï',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 3, 22, 15),
-    //   landingTime: new Date(2020, 3, 23, 17),
-    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // },
-    // {
-    //   departure: 'Atlanta',
-    //   arrival: 'Tokyo',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 3, 22, 9),
-    //   landingTime: new Date(2020, 3, 22, 13),
-    //   dates: [new Date(2020, 3, 22), new Date(2020, 3, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // }
-    // ];
   }
 
-  getFlightInfo(flight) {
+  transformFlightInfos(flight) {
     return {
       departure: flight.departure,
       arrival: flight.arrival,
@@ -94,7 +49,7 @@ export class FlightService {
 
     this.flights.forEach((elt: Flight) => {
 
-      if (JSON.stringify(this.getFlightInfo(elt)) === JSON.stringify(this.getFlightInfo(flightToSearch))) {
+      if (JSON.stringify(this.transformFlightInfos(elt)) === JSON.stringify(this.transformFlightInfos(flightToSearch))) {
         flights.push(elt);
       }
 

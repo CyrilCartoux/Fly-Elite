@@ -15,11 +15,12 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error: string = null;
   isLoggedIn = false;
+  returnUrl: string;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +31,6 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmitForm(form: NgForm) {
-    // const returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
     this.isLoading = true;
     let authObs: Observable<AuthResponse>;
 
@@ -44,7 +44,8 @@ export class AuthComponent implements OnInit {
       (resData) => {
         this.isLoading = false;
         console.log(resData);
-        this.router.navigate(['/book-flight']);
+        let prevUrl = history.back();
+        this.router.navigate(['prevUrl']);
       },
       (errorMessage) => {
         this.error = errorMessage;
