@@ -1,8 +1,7 @@
 import { Flight } from './../interfaces/flight';
-import { FlightService } from './flight.service';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,17 +33,18 @@ export class DataStorageService {
     }
   }
 
-  getFlights() {
-    const query = firebase.database().ref('flights');
-    query.on('value', (snapshot) => {
-      this.flightsSubject.next(Object.values(snapshot.val()));
-    });
-  }
+
+getFlights() {
+  const query = firebase.database().ref('flights');
+  query.on('value', (snapshot) => {
+    this.flightsSubject.next(Object.values(snapshot.val()));
+  });
+}
 
 
-  emitFlights() {
-    this.flightsSubject.next(this.flights);
-  }
+emitFlights() {
+  this.flightsSubject.next(this.flights);
+}
 
 }
 

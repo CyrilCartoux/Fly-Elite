@@ -27,9 +27,11 @@ export class BookFlightComponent implements OnInit {
   ngOnInit(): void {
     this.flightService.flightSelected.subscribe(
       (f: Flight) => {
+        console.log(f)
         this.flight = f;
       }
     );
+
 
     this.userFlightForm = this.flightService.getUserFlightForm();
     this.initForm();
