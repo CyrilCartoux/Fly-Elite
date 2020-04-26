@@ -1,7 +1,8 @@
+import { AuthService } from './../auth/auth.service';
 import { Flight } from './../interfaces/flight';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,11 @@ export class DataStorageService {
 
   flights: Flight[] = [];
 
-  flightsSubject = new Subject<Flight[]>();
+  allFlightsFromFirebaseSubject = new BehaviorSubject<Flight[]>(null);
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   storeFlights() {
     for (const flight of this.flights) {
@@ -34,17 +37,26 @@ export class DataStorageService {
   }
 
 
-getFlights() {
-  const query = firebase.database().ref('flights');
-  query.on('value', (snapshot) => {
-    this.flightsSubject.next(Object.values(snapshot.val()));
-  });
-}
+  getFlights() {
+    const query = firebase.database().ref('flights');
+    query.on('value', (snapshot) => {
+      this.allFlightsFromFirebaseSubject.next(Object.values(snapshot.val()));
+    });
+  }
+
+  storeFlight(flight: Flight) {
+
+    const userId = this.authService.getUserId();
+    console.log(userId);
+
+    firebase.database().ref('users').child(userId.key).push(flight);
+
+  }
 
 
-emitFlights() {
-  this.flightsSubject.next(this.flights);
-}
+  emitFlights() {
+    this.allFlightsFromFirebaseSubject.next(this.flights);
+  }
 
 }
 

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     private data: DataStorageService,
     private flightService: FlightService
   ) {
-    
+   
   }
 
   ngOnInit(): void {

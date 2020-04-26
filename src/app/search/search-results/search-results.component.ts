@@ -1,7 +1,8 @@
+import { DataStorageService } from './../../services/data-storage.service';
 import { Router } from '@angular/router';
 import { FlightService } from './../../services/flight.service';
 import { Flight } from './../../interfaces/flight';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search-results',
@@ -14,7 +15,8 @@ export class SearchResultsComponent implements OnInit {
 
   constructor(
     private flightService: FlightService,
-    private router: Router
+    private router: Router,
+    private dataStorage: DataStorageService
   ) { }
 
   ngOnInit(): void {

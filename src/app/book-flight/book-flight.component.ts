@@ -1,9 +1,11 @@
+import { DataStorageService } from './../services/data-storage.service';
 import { Users } from './../interfaces/user';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, NgForm } from '@angular/forms';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
 import { FlightService } from './../services/flight.service';
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-book-flight',
@@ -17,21 +19,23 @@ export class BookFlightComponent implements OnInit {
 
   addUserForm: FormGroup;
 
+  mainUser;
+
   passengers: Users[] = [];
 
   constructor(
     private flightService: FlightService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dataStorage: DataStorageService
   ) { }
 
   ngOnInit(): void {
     this.flightService.flightSelected.subscribe(
-      (f: Flight) => {
-        console.log(f)
-        this.flight = f;
+      (vol: Flight) => {
+        console.log(vol);
+        this.flight = vol;
       }
     );
-
 
     this.userFlightForm = this.flightService.getUserFlightForm();
     this.initForm();
@@ -63,12 +67,18 @@ export class BookFlightComponent implements OnInit {
   }
 
   deleteUser(index: number) {
-      this.users.removeAt(index);
+    this.users.removeAt(index);
   }
 
   onSubmit() {
     this.passengers.push(...this.addUserForm.value.users);
     console.log(this.passengers);
+
+    // store the flight under user in firebase :
+    this.dataStorage.storeFlight(this.flight);
+
   }
 
+
 }
+

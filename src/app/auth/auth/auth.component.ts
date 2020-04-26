@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService, AuthResponse } from '../auth.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-auth',
@@ -31,6 +32,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmitForm(form: NgForm) {
+    console.log(form.value);
     this.isLoading = true;
     let authObs: Observable<AuthResponse>;
 
@@ -44,7 +46,7 @@ export class AuthComponent implements OnInit {
       (resData) => {
         this.isLoading = false;
         console.log(resData);
-        let prevUrl = history.back();
+        const prevUrl = history.back();
         this.router.navigate(['prevUrl']);
       },
       (errorMessage) => {

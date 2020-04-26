@@ -13,7 +13,7 @@ export class FlightService {
   flights: Flight[] = [];
 
   // vols correspondants a la recherche :
-  flightsFounded: Flight[];
+  flightsFounded: Flight[] = [];
 
   // vol selectionné par l'user dans search/results :
   flightSelected = new BehaviorSubject<Flight>(null);
@@ -25,10 +25,10 @@ export class FlightService {
   constructor(
     private dataStorage: DataStorageService
   ) { }
-  
-  // fetch from firebase
+
+  // fetch from firebase, called from app.component.ts
   fetchFlights() {
-    this.dataStorage.flightsSubject.subscribe(
+    this.dataStorage.allFlightsFromFirebaseSubject.subscribe(
       (data: Flight[]) => {
         this.flights = data;
       }
@@ -43,27 +43,24 @@ export class FlightService {
     };
   }
 
-  findFlight(flightToSearch: FlightToSearch) {
+  findFlight(flightToSearch: FlightToSearch): boolean {
     this.userFlightForm = flightToSearch;
-    const flights = [];
 
     this.flights.forEach((elt: Flight) => {
 
       if (JSON.stringify(this.transformFlightInfos(elt)) === JSON.stringify(this.transformFlightInfos(flightToSearch))) {
-        flights.push(elt);
+        this.flightsFounded.push(elt);
       }
 
     });
 
-    console.log(flights);
-
-    this.flightsFounded = flights;
-    if (flights.length === 0) {
+    if (this.flightsFounded.length === 0) {
       return false;
     } else {
       return true;
     }
   }
+
 
   getFoundedFlights(): Flight[] {
     if (this.flightsFounded === undefined) {
