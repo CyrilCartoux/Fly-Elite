@@ -1,4 +1,3 @@
-import { DataStorageService } from './../../services/data-storage.service';
 import { Router } from '@angular/router';
 import { FlightService } from './../../services/flight.service';
 import { Flight } from './../../interfaces/flight';
@@ -15,11 +14,11 @@ export class SearchResultsComponent implements OnInit {
 
   constructor(
     private flightService: FlightService,
-    private router: Router,
-    private dataStorage: DataStorageService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    // load all the flights that matches the user research to display them
     this.flights =  this.flightService.getFoundedFlights();
   }
 

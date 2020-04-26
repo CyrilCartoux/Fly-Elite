@@ -1,10 +1,12 @@
 <div class="container-fluid text-center p-3">
-    <h2><i class="fas fa-plane-departure fa-2x">  </i>  Votre voyage vers {{ flight.arrival }}</h2>
+    <h2><i class="fas fa-plane-departure fa-2x"> </i> Votre voyage vers {{ flight.arrival }}</h2>
 </div>
 
 <hr style="background-color: white;">
-
-<div class="container mb-3">
+<div *ngIf="isLoading" class="d-flex justify-content-center align-content-center p-4">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="container mb-3" *ngIf="!isLoading">
 
     <div class="row m-0">
         <div class="col-12 p-1">
@@ -75,7 +77,8 @@
             </div>
         </div>
         <div class="row m-0 d-flex align-content-center justify-content-center p-3">
-            <button type="submit" class="btn btn-success btn-lg">Valider et payer</button>
+            <button type="submit" class="btn btn-success btn-lg m-2">Valider et payer</button>
+            <button class="btn btn-danger btn-sm m-2" (click)="onCancel()">Annuler</button>
         </div>
     </form>
 </div>

@@ -1,11 +1,11 @@
+import { Router } from '@angular/router';
 import { DataStorageService } from './../services/data-storage.service';
 import { Users } from './../interfaces/user';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FlightToSearch } from './../interfaces/flight-to-search';
 import { Flight } from './../interfaces/flight';
 import { FlightService } from './../services/flight.service';
 import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-book-flight',
@@ -19,29 +19,31 @@ export class BookFlightComponent implements OnInit {
 
   addUserForm: FormGroup;
 
-  mainUser;
-
   passengers: Users[] = [];
+
+  isLoading = false;
 
   constructor(
     private flightService: FlightService,
     private formBuilder: FormBuilder,
-    private dataStorage: DataStorageService
+    private dataStorage: DataStorageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    // load the selected flight from search-results by the user
     this.flightService.flightSelected.subscribe(
       (vol: Flight) => {
-        console.log(vol);
         this.flight = vol;
       }
     );
-
+    // load the user research form, to display categorie etc
     this.userFlightForm = this.flightService.getUserFlightForm();
     this.initForm();
 
   }
 
+  // Manage form and user (add, delete) : 
   private initForm() {
     this.addUserForm = this.formBuilder.group({
       users: this.formBuilder.array([
@@ -71,13 +73,24 @@ export class BookFlightComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
+    // push the form value into passengers array
     this.passengers.push(...this.addUserForm.value.users);
-    console.log(this.passengers);
 
     // store the flight under user in firebase :
     this.dataStorage.storeFlight(this.flight);
 
+    setInterval(() => {
+      this.isLoading = false;
+      this.router.navigate(['account']);
+    }, 1500);
   }
+
+  onCancel() {
+    this.router.navigate(['search']);
+  }
+
+  // end of form management
 
 
 }

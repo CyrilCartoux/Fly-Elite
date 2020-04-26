@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     private data: DataStorageService,
     private flightService: FlightService
   ) {
-   
+    
   }
 
   ngOnInit(): void {
@@ -29,6 +29,19 @@ export class AppComponent implements OnInit {
     // otherwise if you open the app in some other url it won't load the flights
     this.flightService.fetchFlights();
 
+    this.initUser();
+
+  }
+
+  initUser() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user.uid);
+        this.authService.user.next(user.uid);
+      } else {
+        console.log('no users');
+      }
+    })
   }
 
 

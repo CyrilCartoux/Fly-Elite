@@ -34,26 +34,18 @@ export class AuthComponent implements OnInit {
   onSubmitForm(form: NgForm) {
     console.log(form.value);
     this.isLoading = true;
-    let authObs: Observable<AuthResponse>;
 
     if (this.isLoginMode) {
-      authObs = this.authService.signIn(form);
+      this.authService.signIn(form);
+      this.isLoading = false;
+      const prevUrl = history.back();
+      this.router.navigate(['prevUrl']);
     } else {
-      authObs = this.authService.signUp(form);
+      this.authService.signUp(form);
+      this.isLoading = false;
+      const prevUrl = history.back();
+      this.router.navigate(['search']);
     }
-
-    authObs.subscribe(
-      (resData) => {
-        this.isLoading = false;
-        console.log(resData);
-        const prevUrl = history.back();
-        this.router.navigate(['prevUrl']);
-      },
-      (errorMessage) => {
-        this.error = errorMessage;
-        this.isLoading = false;
-      }
-    );
 
     form.reset();
   }

@@ -35,6 +35,7 @@ export class FlightService {
     );
   }
 
+  // tranform data in order to compare flights easily
   transformFlightInfos(flight) {
     return {
       departure: flight.departure,
@@ -43,6 +44,7 @@ export class FlightService {
     };
   }
 
+  // match flights between user research and flights in database :
   findFlight(flightToSearch: FlightToSearch): boolean {
     this.userFlightForm = flightToSearch;
 
@@ -61,7 +63,7 @@ export class FlightService {
     }
   }
 
-
+  // return list of flights who match user research :
   getFoundedFlights(): Flight[] {
     if (this.flightsFounded === undefined) {
       return;
@@ -70,27 +72,14 @@ export class FlightService {
     }
   }
 
-  getAllFlights() {
-    return this.flights;
-  }
-
+  // used by search-results when one flight is selected :
   getFlightById(index: number) {
     this.flightSelected.next(this.flightsFounded[index]);
   }
 
+  // used by book-flight to display more infos about the user flight :
   getUserFlightForm(): FlightToSearch {
     return this.userFlightForm;
   }
-
-
-
-  // compare departureDate()
-  // compareDates(date1: Date, date2: Date): boolean {
-
-  //   const d1 = new Date(date1);
-  //   const d2 = new Date(date2);
-
-  //   return d1.getTime() === d2.getTime();
-  // }
 
 }
