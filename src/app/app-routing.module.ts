@@ -1,5 +1,4 @@
 import { EditComponent } from './user-account/edit/edit.component';
-import { UserFlightComponent } from './user-account/user-flight/user-flight.component';
 import { UserAccountComponent } from './user-account/user-account/user-account.component';
 import { AuthGuard } from './auth/auth/auth.guard';
 import { AuthComponent } from './auth/auth/auth.component';
@@ -24,7 +23,6 @@ const routes: Routes = [
   {
     path: 'account', component: UserAccountComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'flights', component: UserFlightComponent },
       { path: 'edit', component: EditComponent }
     ]
   },

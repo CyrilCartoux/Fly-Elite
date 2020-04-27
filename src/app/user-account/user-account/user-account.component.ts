@@ -22,6 +22,7 @@ export class UserAccountComponent implements OnInit {
     flightUid;
     uid;
     flightsOfUser = [];
+    keysOfFlights = [];
 
     ngOnInit() {
 
@@ -29,11 +30,7 @@ export class UserAccountComponent implements OnInit {
             this.uid = data;
         });
 
-        firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
-            snapshot.forEach(elt => {
-                this.flightsOfUser.push(elt.val());
-            });
-        });
+        this.emitFlights();
 
         this.items = [{
             label: 'Mes vols',
@@ -45,13 +42,34 @@ export class UserAccountComponent implements OnInit {
             label: 'Edit',
             items: [
                 { label: 'Ajouter un vol', icon: 'pi pi-plus', routerLink: '/search' },
-                { label: 'Annuler mes vols', icon: 'pi pi-trash' }
+                { label: 'Annuler mes vols', icon: 'pi pi-trash',  }
             ]
         }];
-        // recuperer les vols A FAIRE :
+    }
 
-        // this.flightUid = this.dataStorage.getFlightId();
-        // console.log(this.flightUid.key);
+    emitFlights() {
+        firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
+            snapshot.forEach(elt => {
+                this.flightsOfUser.push(elt.val());
+                this.keysOfFlights.push(elt.key);
+            });
+        });
+    }
+
+    deleteFlight(index: number) {
+        const key = this.keysOfFlights[index];
+        console.log(key);
+        firebase.database().ref('users').child(this.uid).child('flights').child(key).remove().then(
+            () => {
+                this.flightsOfUser = [];
+                this.keysOfFlights = [];
+                this.emitFlights();
+            }
+        );
+    }
+
+    deleteAllFlights(e) {
+
     }
 
 }

@@ -26,7 +26,6 @@ import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { UserAccountComponent } from './user-account/user-account/user-account.component';
-import { UserFlightComponent } from './user-account/user-flight/user-flight.component';
 import { EditComponent } from './user-account/edit/edit.component';
 
 @NgModule({
@@ -42,7 +41,6 @@ import { EditComponent } from './user-account/edit/edit.component';
     LoadingSpinnerComponent,
     AlertComponent,
     UserAccountComponent,
-    UserFlightComponent,
     EditComponent
   ],
   imports: [

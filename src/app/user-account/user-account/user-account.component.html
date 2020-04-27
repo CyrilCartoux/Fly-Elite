@@ -6,18 +6,19 @@
         <div class="col-4">
             <div class="container p-3">
 
-                <p-menu [model]="items"></p-menu>
+                <p-menu [model]="items" (click)='deleteAllFlights($event)'></p-menu>
 
             </div>
         </div>
         <div class="col-8">
             <router-outlet></router-outlet>
 
-            <div class="container mb-3" *ngFor="let flight of flightsOfUser; let i = index" style="border: 1px solid grey;">
+            <div class="container mb-3 p-3" *ngFor="let flight of flightsOfUser; let i = index" style="border: 1px solid grey;">
 
                 <h4>Mon vol numéro {{i}} :</h4>
+                <button class="btn btn-danger btn-sm" (click)="deleteFlight(i)">Supprimer</button>
 
-                <div class="row m-0">
+                <div class="row m-0 p-3">
                     <div class="col-12 p-1">
                         <i class="fas fa-arrow-right fa-2x"></i> <span> Votre départ : Aéroport de {{ flight.departure }} le
                             {{ flight.departureTime | date:'dd/MM HH:mm' }}. </span>
