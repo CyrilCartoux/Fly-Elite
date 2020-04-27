@@ -26,6 +26,7 @@ export class AuthGuard implements CanActivate {
                 if (isAuth) {
                     return true;
                 } else {
+                    console.log('soucis')
                     this.router.navigate(['/auth']);
                 }
             }
