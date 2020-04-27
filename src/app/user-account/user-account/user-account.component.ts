@@ -1,8 +1,9 @@
+import { FlightService } from './../../services/flight.service';
 import { AuthService } from './../../auth/auth.service';
 import { DataStorageService } from './../../services/data-storage.service';
-import { Flight } from './../../interfaces/flight';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
+import * as firebase from 'firebase';
 
 @Component({
     selector: 'app-user-account',
@@ -13,18 +14,30 @@ export class UserAccountComponent implements OnInit {
 
     constructor(
         private dataStorage: DataStorageService,
-        private authService: AuthService
+        private authService: AuthService,
+        private flightService: FlightService
     ) { }
 
     items: MenuItem[];
+    flightUid;
     uid;
-    flightsOfUser;
+    flightsOfUser = [];
 
     ngOnInit() {
+
+        this.authService.user.subscribe(data => {
+            this.uid = data;
+        });
+
+        firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
+            snapshot.forEach(elt => {
+                this.flightsOfUser.push(elt.val());
+            });
+        });
+
         this.items = [{
             label: 'Mes vols',
             items: [
-                { label: 'Voir', icon: 'pi pi-fw pi-plus', routerLink: 'flights' },
                 { label: 'Modifier', icon: 'pi pi-pencil', routerLink: 'edit' }
             ]
         },
@@ -35,11 +48,10 @@ export class UserAccountComponent implements OnInit {
                 { label: 'Annuler mes vols', icon: 'pi pi-trash' }
             ]
         }];
-        this.authService.user.subscribe(data => {
-            this.uid = data;
-        })
-        this.flightsOfUser = this.dataStorage.getFlightsOfUser(this.uid);
-        console.log(this.flightsOfUser);
+        // recuperer les vols A FAIRE :
+
+        // this.flightUid = this.dataStorage.getFlightId();
+        // console.log(this.flightUid.key);
     }
 
 }

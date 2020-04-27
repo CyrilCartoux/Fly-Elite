@@ -36,12 +36,12 @@ export class AppComponent implements OnInit {
   initUser() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user.uid);
+        console.log('user is connected : ' + user.uid);
         this.authService.user.next(user.uid);
       } else {
         console.log('no users');
       }
-    })
+    });
   }
 
 

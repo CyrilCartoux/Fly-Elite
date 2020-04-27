@@ -43,7 +43,7 @@ export class BookFlightComponent implements OnInit {
 
   }
 
-  // Manage form and user (add, delete) : 
+  // Manage form and user (add, delete) :
   private initForm() {
     this.addUserForm = this.formBuilder.group({
       users: this.formBuilder.array([
@@ -80,7 +80,7 @@ export class BookFlightComponent implements OnInit {
     // store the flight under user in firebase :
     this.dataStorage.storeFlight(this.flight);
 
-    setInterval(() => {
+    setTimeout(() => {
       this.isLoading = false;
       this.router.navigate(['account']);
     }, 1500);

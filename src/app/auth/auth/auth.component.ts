@@ -38,12 +38,10 @@ export class AuthComponent implements OnInit {
     if (this.isLoginMode) {
       this.authService.signIn(form);
       this.isLoading = false;
-      const prevUrl = history.back();
-      this.router.navigate(['prevUrl']);
+      this.router.navigate(['search']);
     } else {
       this.authService.signUp(form);
       this.isLoading = false;
-      const prevUrl = history.back();
       this.router.navigate(['search']);
     }
 

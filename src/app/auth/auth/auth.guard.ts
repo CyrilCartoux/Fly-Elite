@@ -22,11 +22,12 @@ export class AuthGuard implements CanActivate {
         return this.authService.user.pipe(
             take(1),
             map(user => {
-                const isAuth = !!user;
+                const isAuth = user ? true : false;
                 if (isAuth) {
+                    console.log('permission ok')
                     return true;
                 } else {
-                    console.log('soucis')
+                    console.log('no permission, redirected to auth')
                     this.router.navigate(['/auth']);
                 }
             }
