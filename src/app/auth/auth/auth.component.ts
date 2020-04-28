@@ -1,9 +1,7 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { AuthService, AuthResponse } from '../auth.service';
-import * as firebase from 'firebase';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -15,13 +13,10 @@ export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
-  isLoggedIn = false;
-  returnUrl: string;
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -32,10 +27,10 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmitForm(form: NgForm) {
-    console.log(form.value);
     this.isLoading = true;
 
     if (this.isLoginMode) {
+
       this.authService.signIn(form);
       this.isLoading = false;
       this.router.navigate(['search']);
@@ -46,10 +41,6 @@ export class AuthComponent implements OnInit {
     }
 
     form.reset();
-  }
-
-  closeErrorModal() {
-    this.error = null;
   }
 
 }

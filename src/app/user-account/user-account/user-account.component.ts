@@ -1,8 +1,5 @@
 import { Users } from './../../interfaces/user';
-import { User } from './../../auth/user.model';
-import { FlightService } from './../../services/flight.service';
 import { AuthService } from './../../auth/auth.service';
-import { DataStorageService } from './../../services/data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import * as firebase from 'firebase';
@@ -15,20 +12,17 @@ import * as firebase from 'firebase';
 export class UserAccountComponent implements OnInit {
 
     constructor(
-        private dataStorage: DataStorageService,
-        private authService: AuthService,
-        private flightService: FlightService
+        private authService: AuthService
     ) { }
 
     items: MenuItem[];
-    flightUid;
     uid;
     passengers: Users[];
     flightsOfUser = [];
     keysOfFlights = [];
 
     ngOnInit() {
-
+        // get uid from connectedUser
         this.authService.user.subscribe(data => {
             this.uid = data;
         });
@@ -45,15 +39,17 @@ export class UserAccountComponent implements OnInit {
             label: 'Edit',
             items: [
                 { label: 'Ajouter un vol', icon: 'pi pi-plus', routerLink: '/search' },
-                { label: 'Annuler mes vols', icon: 'pi pi-trash',  }
+                { label: 'Annuler mes vols', icon: 'pi pi-trash', }
             ]
         }];
     }
 
-    getPassengers() {
-        firebase.database().ref('users').child(this.uid).child('flights')
-    }
+    // getPassengers() {
+    //     firebase.database().ref('users').child(this.uid).child('flights');
+    // }
 
+    // load the flights under the current user from firebase, store them in flightOfUser +
+    // load the flights keys from the current user, store the in keysOfFlights
     emitFlights() {
         firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
             snapshot.forEach(elt => {
@@ -63,9 +59,10 @@ export class UserAccountComponent implements OnInit {
         });
     }
 
+    // get the index of flight, search the flight key associated to it, then delete it
     deleteFlight(index: number) {
         const key = this.keysOfFlights[index];
-        console.log(key);
+        // connect to database, remove the flight than empty both arrays and call emitFlight again to store the new list of flights
         firebase.database().ref('users').child(this.uid).child('flights').child(key).remove().then(
             () => {
                 this.flightsOfUser = [];
@@ -75,8 +72,8 @@ export class UserAccountComponent implements OnInit {
         );
     }
 
+    // TODO : create a delete component, delete
     deleteAllFlights(e) {
-
     }
 
 }

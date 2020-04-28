@@ -7,7 +7,6 @@
 # Only exists if Bazel was run
 /bazel-out
 
-/src/app/auth/auth.service.ts
 /src/app/app.component.ts
 
 # dependencies

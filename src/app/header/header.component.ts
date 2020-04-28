@@ -1,4 +1,3 @@
-import { User } from './../auth/user.model';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  user: User;
+  user;
 
   constructor(
     private authService: AuthService
@@ -17,8 +16,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.user.subscribe(
-      (user: User) => {
-        if (user ) {
+      (user) => {
+        if (user) {
           this.user = user;
         } else {
           this.user = null;

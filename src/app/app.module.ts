@@ -1,16 +1,15 @@
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
-import {CalendarModule} from 'primeng/calendar';
-import {DropdownModule} from 'primeng/dropdown';
-import {ToggleButtonModule} from 'primeng/togglebutton';
-import {CardModule} from 'primeng/card';
-import {MenuModule} from 'primeng/menu';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { CardModule } from 'primeng/card';
+import { MenuModule } from 'primeng/menu';
 
 
 
@@ -58,11 +57,7 @@ import { EditComponent } from './user-account/edit/edit.component';
     CardModule,
     MenuModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true
-  }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.autoLogIn();
     // load the flights from firebase
     this.data.getFlights();
     // load the flights in flightService!
