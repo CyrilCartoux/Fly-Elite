@@ -1,6 +1,7 @@
 import { DataStorageService } from './../../services/data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-admin',
@@ -11,33 +12,41 @@ export class AdminComponent implements OnInit {
 
   items: MenuItem[];
   flights = [];
+  keysOfFlights = [];
 
-  constructor(
-    private dataService: DataStorageService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
 
-    this.dataService.allFlightsFromFirebaseSubject.subscribe(
-      (flights) => {
-        flights.forEach(elt => {
-          this.flights.push(elt);
-        });
-      }
-    );
+    // this.dataService.storeFlights();
+    this.emitFlights();
 
-    this.items = [{
-      label: 'Mes vols',
-      items: [
-        { label: 'Modifier', icon: 'pi pi-pencil', routerLink: 'edit' }
-      ]
-    },
-    {
-      label: 'Edit',
-      items: [
-        { label: 'Ajouter un vol', icon: 'pi pi-plus', routerLink: 'add' },
-      ]
-    }];
+    this.items = [
+      {
+        label: 'Editer',
+        items: [
+          { label: 'Ajouter un vol', icon: 'pi pi-plus', routerLink: 'add' },
+        ]
+      }];
+  }
+
+  emitFlights() {
+    firebase.database().ref('flights').on('value', (snapshot) => {
+      snapshot.forEach(elt => {
+        this.flights.push(elt.val());
+        this.keysOfFlights.push(elt.key);
+      });
+    });
+  }
+
+  onDeleteFlight(index: number) {
+    const key = this.keysOfFlights[index];
+    firebase.database().ref('flights').child(key).remove()
+      .then(() => {
+        this.flights = [];
+        this.keysOfFlights = [];
+        this.emitFlights();
+      });
   }
 
 }

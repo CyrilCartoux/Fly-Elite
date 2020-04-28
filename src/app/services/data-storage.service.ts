@@ -24,7 +24,56 @@ export class DataStorageService {
         this.uid = data;
       }
     );
+
+    // // // //
+    // this.flights = [{
+    //   departure: 'Dubaï',
+    //   arrival: 'Amsterdam',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 4, 22, 9),
+    //   landingTime: new Date(2020, 4, 23, 13),
+    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // },
+    // {
+    //   departure: 'Dubaï',
+    //   arrival: 'Los Angeles',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 4, 22, 9),
+    //   landingTime: new Date(2020, 4, 23, 13),
+    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // },
+    // {
+    //   departure: 'Atlanta',
+    //   arrival: 'Chicago',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 4, 22, 9),
+    //   landingTime: new Date(2020, 4, 23, 13),
+    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // },
+    // {
+    //   departure: 'Tokyo',
+    //   arrival: 'Amsterdam',
+    //   flightNumber: 1,
+    //   departureTime: new Date(2020, 4, 22, 9),
+    //   landingTime: new Date(2020, 4, 23, 13),
+    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
+    //   flightTime: 4,
+    //   company: 'AirFrance',
+    //   noEscales: true
+    // }
+    // ];
+    // // // //
   }
+
 
   // storeFlights() {
   //   for (const flight of this.flights) {
@@ -43,6 +92,7 @@ export class DataStorageService {
   //       noEscales: flight.noEscales
   //     });
   //   }
+  //   console.log('stored all flights')
   // }
 
   // get all the flights from firebse, stores them in the BehaviorSubject, used by the flight service on app load
@@ -89,10 +139,6 @@ export class DataStorageService {
   //   return userFlights;
   // }
 
-
-  emitFlights() {
-    this.allFlightsFromFirebaseSubject.next(this.flights);
-  }
 
 }
 

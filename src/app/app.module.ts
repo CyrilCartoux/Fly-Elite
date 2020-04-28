@@ -28,6 +28,7 @@ import { UserAccountComponent } from './user-account/user-account/user-account.c
 import { EditComponent } from './user-account/edit/edit.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { AddComponent } from './admin/add/add.component';
+import { AdminEditComponent } from './admin/admin-edit/admin-edit.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AddComponent } from './admin/add/add.component';
     UserAccountComponent,
     EditComponent,
     AdminComponent,
-    AddComponent
+    AddComponent,
+    AdminEditComponent
   ],
   imports: [
     BrowserModule,
