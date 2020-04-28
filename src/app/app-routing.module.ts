@@ -1,3 +1,5 @@
+import { AddComponent } from './admin/add/add.component';
+import { AdminComponent } from './admin/admin/admin.component';
 import { EditComponent } from './user-account/edit/edit.component';
 import { UserAccountComponent } from './user-account/user-account/user-account.component';
 import { AuthGuard } from './auth/auth/auth.guard';
@@ -26,6 +28,10 @@ const routes: Routes = [
       { path: 'edit', component: EditComponent }
     ]
   },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children : [
+    { path : 'edit', component: EditComponent},
+    { path: 'add', component: AddComponent}
+  ]},
   { path: 'auth', component: AuthComponent },
   { path: '**', redirectTo: 'search', pathMatch: 'full' }
 ];

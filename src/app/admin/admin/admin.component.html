@@ -1,33 +1,40 @@
 <div class="container p-2">
-    <h3 class="first">Gérer mon compte</h3>
+    <h3 class="first">Administer les vols</h3>
     <hr style="background-color: white;">
     <div class="row">
 
         <div class="col-4">
             <div class="container p-3">
 
-                <p-menu [model]="items" (click)='deleteAllFlights($event)'></p-menu>
+                <p-menu [model]="items"></p-menu>
 
             </div>
         </div>
         <div class="col-8">
             <router-outlet></router-outlet>
+            <h3>Liste des vols :</h3>
+            <div class="container mb-3" style="border: 1px solid grey;" *ngFor="let flight of flights; let i = index">
+                <div>
+                    <h4>Vol {{i+1}} : 
+                        <button class="btn btn-danger m-1">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                        <a class="btn btn-success m-1" routerLink="edit">
+                            <i class="far fa-edit"></i>
+                        </a>
+                    </h4>
+                </div>
 
-            <div class="container mb-3 p-3" *ngFor="let flight of flightsOfUser; let i = index"
-                style="border: 1px solid grey;">
 
-                <h4>Mon vol numéro {{i+1}} :</h4>
-                <button class="btn btn-danger btn-sm" (click)="deleteFlight(i)">Supprimer</button>
-
-                <div class="row m-0 p-3">
+                <div class="row m-0">
                     <div class="col-12 p-1">
-                        <i class="fas fa-arrow-right fa-2x"></i> <span> Votre départ : Aéroport de
-                            {{ flight.departure }} le
-                            {{ flight.departureTime | date:'dd/MM HH:mm' }}. </span>
+                        <i class="fas fa-arrow-right fa-2x"></i> <span> Départ : Aéroport de
+                            {{flight.departure}} le
+                            {{flight.departureTime | date:'dd/MM HH:mm'}} . </span>
                     </div>
                     <div class="col-12 p-1">
-                        <i class="fas fa-arrow-right fa-2x"></i><span> Votre arrivée : - {{ flight.arrival }} le
-                            {{ flight.landingTime | date:'dd/MM HH:mm' }} </span>
+                        <i class="fas fa-arrow-right fa-2x"></i><span> Arrivée : - {{flight.arrival}} le
+                            {{flight.landingTime | date:'dd/MM HH:mm'}} </span>
                     </div>
                     <div class="col-12 p-1" *ngIf="flight.noEscale">
                         <i class="fas fa-plane"></i> Vol direct
@@ -36,22 +43,21 @@
                         <i class="fas fa-plane"></i> Vol AVEC escales
                     </div>
                 </div>
-                <div class="row m-0 pt-2">
+                <div class="row m-0">
                     <div class="col-10">
                         <div class="row m-0 d-flex justify-content-around">
                             <div class="col-2">
                                 <h6>Numéro du vol : </h6>
-                                <p>{{ flight.flightNumber }}</p>
+                                <p> {{flight.flightNumber}} </p>
                             </div>
 
                             <div class="col-4 text-center">
                                 <h6>Compagnie : </h6>
-                                <p>{{ flight.company }}</p>
+                                <p> {{flight.company}} </p>
                             </div>
 
                         </div>
                     </div>
-
                 </div>
             </div>
 
