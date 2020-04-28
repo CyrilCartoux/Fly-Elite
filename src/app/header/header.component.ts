@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   user;
+  successLogOut = false;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +31,11 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.user.next(null);
+    this.successLogOut = true;
+    this.router.navigate(['search']);
+    setTimeout(() => {
+      this.successLogOut = false;
+    }, 500);
   }
 
 }
