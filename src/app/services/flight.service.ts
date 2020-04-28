@@ -51,6 +51,7 @@ export class FlightService {
     this.flights.forEach((elt: Flight) => {
 
       if (JSON.stringify(this.transformFlightInfos(elt)) === JSON.stringify(this.transformFlightInfos(flightToSearch))) {
+        this.flightsFounded = [];
         this.flightsFounded.push(elt);
       }
 

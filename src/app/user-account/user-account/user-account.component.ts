@@ -1,3 +1,5 @@
+import { Users } from './../../interfaces/user';
+import { User } from './../../auth/user.model';
 import { FlightService } from './../../services/flight.service';
 import { AuthService } from './../../auth/auth.service';
 import { DataStorageService } from './../../services/data-storage.service';
@@ -21,6 +23,7 @@ export class UserAccountComponent implements OnInit {
     items: MenuItem[];
     flightUid;
     uid;
+    passengers: Users[];
     flightsOfUser = [];
     keysOfFlights = [];
 
@@ -45,6 +48,10 @@ export class UserAccountComponent implements OnInit {
                 { label: 'Annuler mes vols', icon: 'pi pi-trash',  }
             ]
         }];
+    }
+
+    getPassengers() {
+        firebase.database().ref('users').child(this.uid).child('flights')
     }
 
     emitFlights() {
