@@ -80,7 +80,7 @@ export class AddComponent implements OnInit {
     this.addFlightForm.reset();
     setTimeout(() => {
       this.success = false;
-    }, 800)
+    }, 3000);
   }
 
 }

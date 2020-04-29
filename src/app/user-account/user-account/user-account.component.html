@@ -6,7 +6,10 @@
         <div class="col-4">
             <div class="container p-3">
 
-                <p-menu [model]="items" (click)='deleteAllFlights($event)'></p-menu>
+                <div class="list-group" style="color: black;">
+                    <a routerLink="/search" class="list-group-item list-group-item-action list-group-item-success"><i class="fas fa-plus"> </i> Ajouter un vol</a>
+                    <a (click)="onDeleteAllFlights()" class="list-group-item list-group-item-action list-group-item-danger"><i class="far fa-trash-alt"> </i> Supprimer mes vols</a>
+                </div>
 
             </div>
         </div>

@@ -1,3 +1,4 @@
+import { DataStorageService } from './../../services/data-storage.service';
 import { Users } from './../../interfaces/user';
 import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,8 @@ import * as firebase from 'firebase';
 export class UserAccountComponent implements OnInit {
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private dataService: DataStorageService
     ) { }
 
     items: MenuItem[];
@@ -44,10 +46,6 @@ export class UserAccountComponent implements OnInit {
         }];
     }
 
-    // getPassengers() {
-    //     firebase.database().ref('users').child(this.uid).child('flights');
-    // }
-
     // load the flights under the current user from firebase, store them in flightOfUser +
     // load the flights keys from the current user, store the in keysOfFlights
     emitFlights() {
@@ -72,8 +70,12 @@ export class UserAccountComponent implements OnInit {
         );
     }
 
-    // TODO : create a delete component, delete
-    deleteAllFlights(e) {
+    // TODO : delete
+    onDeleteAllFlights() {
+        this.dataService.deleteAllFlightsOfUser(this.uid);
+        this.flightsOfUser = [];
+        this.keysOfFlights = [];
+        this.emitFlights();
     }
 
 }

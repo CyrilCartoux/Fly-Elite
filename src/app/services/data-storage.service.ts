@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Flight } from './../interfaces/flight';
 import { Injectable } from '@angular/core';
@@ -16,10 +15,10 @@ export class DataStorageService {
   uid;
 
   allFlightsFromFirebaseSubject = new BehaviorSubject<Flight[]>(null);
+  allKeysOfFlightsFromFirebase = [];
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {
     this.authService.user.subscribe(
       data => {
@@ -33,7 +32,14 @@ export class DataStorageService {
     const query = firebase.database().ref('flights');
     query.on('value', (snapshot) => {
       this.allFlightsFromFirebaseSubject.next(Object.values(snapshot.val()));
+      snapshot.forEach(elt => {
+        this.allKeysOfFlightsFromFirebase.push(elt.key);
+      });
     });
+  }
+
+  getKeysOfFlights() {
+    return this.allKeysOfFlightsFromFirebase;
   }
 
   storeFlight(flight: Flight) {
@@ -62,7 +68,7 @@ export class DataStorageService {
     const departure = form.value.departureTime.toUTCString();
     const landing = form.value.landingTime.toUTCString();
     const datesVol = form.value.dates.toLocaleString();
-    const idcreated = firebase.database().ref('flights').push({
+    firebase.database().ref('flights').push({
       departure: form.value.departure,
       arrival: form.value.arrival,
       flightNumber: form.value.flightNumber,
@@ -78,16 +84,11 @@ export class DataStorageService {
     return this.flightId;
   }
 
-  // getFlightsOfUser(userId) {
-  //   console.log(this.uid);
-  //   const userFlights = [];
-  //   firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
-  //     console.log(snapshot.val());
-  //     userFlights.push(snapshot.val());
-  //   });
-  //   return userFlights;
-  // }
-
+  deleteAllFlightsOfUser(uid) {
+    firebase.database().ref('users').child(uid).child('flights').remove().then(() => {
+      console.log('deleted');
+    });
+  }
 
 }
 
