@@ -37,12 +37,11 @@
 
             <router-outlet></router-outlet>
 
-            <div class="container mb-3 p-3" *ngFor="let flight of flightsOfUser; let i = index"
-                style="border: 1px solid grey;">
+            <div class="container-flight mb-3 p-3" *ngFor="let flight of flightsOfUser; let i = index">
 
                 <h4>{{i+1}} : {{flight.departure}} - {{ flight.arrival }}</h4>
                 <button class="btn btn-danger btn-sm m-1" (click)="deleteFlight(i)">Supprimer</button>
-                <a class="btn btn-success btn-sm m-1" [routerLink]="['edit', i]">Modifier</a>
+                <a class="btn btn-primary btn-sm m-1" [routerLink]="['edit', i]">Modifier</a>
 
                 <div class="row m-0 p-3">
                     <div class="col-12 p-1">

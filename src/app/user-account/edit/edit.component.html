@@ -1,5 +1,9 @@
 <h4 class="alert alert-success" *ngIf="success">Vol modifié avec succès !</h4>
-<h4 class="m-2">Editer vol : </h4>
+<div class="text-center">
+    <h3 class="m-1 mb-4">Editer vol : </h3>
+</div>
+
+<hr style="background-color: white; width: 200px;">
 <form [formGroup]='editFlightForm' (submit)='onSubmitEditFlightForm()'>
     <div class="form-row">
         <div class="form-group col-md-4">
@@ -52,5 +56,6 @@
             </p-toggleButton>
         </div>
     </div>
-    <button type="submit" class="btn btn-success mb-2"> Modifier </button>
+    <button type="submit" class="btn btn-primary m-3 btn-lg"> Modifier </button>
 </form>
+<hr style="background-color: white;">

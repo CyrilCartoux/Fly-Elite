@@ -39,7 +39,6 @@ export class EditComponent implements OnInit {
     this.route.paramMap.subscribe(
       (res) => {
         this.idToEdit = res.get('id');
-        console.log(this.idToEdit);
       }
     );
 

@@ -16,13 +16,13 @@
         <div class="col-9">
             <router-outlet></router-outlet>
             <h3>Liste des vols :</h3>
-            <div class="container mb-3" style="border: 1px solid grey;" *ngFor="let flight of flights; let i = index">
+            <div class="container-flight mb-3 p-2" style="border: 1px solid grey;" *ngFor="let flight of flights; let i = index">
                 <div>
                     <h4>Vol {{i+1}} :
                         <button class="btn btn-danger m-1" (click)="onDeleteFlight(i)">
                             <i class="far fa-trash-alt"></i>
                         </button>
-                        <a class="btn btn-success m-1" routerLink="edit">
+                        <a class="btn btn-primary m-1" routerLink="edit">
                             <i class="far fa-edit"></i>
                         </a>
                     </h4>

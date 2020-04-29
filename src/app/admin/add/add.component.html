@@ -1,4 +1,9 @@
 <h4 class="alert alert-success" *ngIf="success">Vol ajouté avec succès !</h4>
+<div class="text-center">
+    <h3 class="m-1 mb-4">Ajouter un vol : </h3>
+</div>
+
+<hr style="background-color: white; width: 200px;">
 <form [formGroup]='addFlightForm' (submit)='onSubmitAddFlightForm()'>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -48,5 +53,5 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <button type="submit" class="btn btn-primary m-3 btn-lg">Enregistrer</button>
 </form>
