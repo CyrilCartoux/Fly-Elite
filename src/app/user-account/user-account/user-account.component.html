@@ -7,8 +7,11 @@
             <div class="container p-3">
 
                 <div class="list-group" style="color: black;">
-                    <a routerLink="/search" class="list-group-item list-group-item-action list-group-item-success"><i class="fas fa-plus"> </i> Ajouter un vol</a>
-                    <a (click)="onDeleteAllFlights()" class="list-group-item list-group-item-action list-group-item-danger"><i class="far fa-trash-alt"> </i> Supprimer mes vols</a>
+                    <a routerLink="/search" class="list-group-item list-group-item-action list-group-item-success"><i
+                            class="fas fa-plus"> </i> Ajouter un vol</a>
+                    <a (click)="onDeleteAllFlights($event)"
+                        class="list-group-item list-group-item-action list-group-item-danger"><i
+                            class="far fa-trash-alt"> </i> Supprimer mes vols</a>
                 </div>
 
             </div>
@@ -20,7 +23,8 @@
                 style="border: 1px solid grey;">
 
                 <h4>Mon vol numéro {{i+1}} :</h4>
-                <button class="btn btn-danger btn-sm" (click)="deleteFlight(i)">Supprimer</button>
+                <button class="btn btn-danger btn-sm m-1" (click)="deleteFlight(i)">Supprimer</button>
+                <a class="btn btn-success btn-sm m-1" [routerLink]="['edit', i]">Modifier</a>
 
                 <div class="row m-0 p-3">
                     <div class="col-12 p-1">

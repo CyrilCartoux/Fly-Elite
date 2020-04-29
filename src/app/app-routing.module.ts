@@ -26,13 +26,13 @@ const routes: Routes = [
   {
     path: 'account', component: UserAccountComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'edit', component: EditComponent }
+      { path: 'edit/:id', component: EditComponent}
     ]
   },
   {
     path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
       { path: 'add', component: AddComponent },
-      { path: 'edit', component: AdminEditComponent }
+      { path: 'edit/:id', component: AdminEditComponent }
     ]
   },
   { path: 'auth', component: AuthComponent },

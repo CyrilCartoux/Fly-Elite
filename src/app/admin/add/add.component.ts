@@ -1,8 +1,6 @@
-import { Router } from '@angular/router';
 import { DataStorageService } from './../../services/data-storage.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-add',
@@ -26,9 +24,7 @@ export class AddComponent implements OnInit {
   success = false;
 
   constructor(
-    private dataStorage: DataStorageService,
-    private router: Router,
-    private ngZone: NgZone
+    private dataStorage: DataStorageService
   ) { }
 
   ngOnInit(): void {

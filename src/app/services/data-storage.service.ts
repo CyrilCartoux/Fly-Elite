@@ -17,6 +17,8 @@ export class DataStorageService {
   allFlightsFromFirebaseSubject = new BehaviorSubject<Flight[]>(null);
   allKeysOfFlightsFromFirebase = [];
 
+  allFlightKeyOfUser = [];
+
   constructor(
     private authService: AuthService
   ) {
@@ -88,6 +90,27 @@ export class DataStorageService {
     firebase.database().ref('users').child(uid).child('flights').remove().then(() => {
       console.log('deleted');
     });
+  }
+
+  editFlightOfUser(index, form) {
+    const departure = form.value.departure;
+    const arrival = form.value.arrival;
+    const category = form.value.category.name;
+    const noEscale = form.value.noEscale;
+    const datesVol = form.value.dates.toLocaleString();
+    firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
+      snapshot.forEach(elt => {
+        this.allFlightKeyOfUser.push(elt.key);
+      });
+    });
+    const key = this.allFlightKeyOfUser[index];
+    firebase.database().ref('users').child(this.uid).child('flights').child(key).update({
+      departure: departure,
+      arrival: arrival,
+      category: category,
+      noEscale: noEscale,
+      dates: datesVol
+    })
   }
 
 }

@@ -70,12 +70,15 @@ export class UserAccountComponent implements OnInit {
         );
     }
 
-    // TODO : delete
-    onDeleteAllFlights() {
-        this.dataService.deleteAllFlightsOfUser(this.uid);
-        this.flightsOfUser = [];
-        this.keysOfFlights = [];
-        this.emitFlights();
+    onDeleteAllFlights(e) {
+        if (window.confirm('Êtes-vous sûr ?')) {
+            this.dataService.deleteAllFlightsOfUser(this.uid);
+            this.flightsOfUser = [];
+            this.keysOfFlights = [];
+            this.emitFlights();
+        } else {
+            e.preventDefault();
+        }
     }
 
 }
