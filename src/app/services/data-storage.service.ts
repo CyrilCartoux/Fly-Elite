@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Flight } from './../interfaces/flight';
 import { Injectable } from '@angular/core';
@@ -17,83 +18,15 @@ export class DataStorageService {
   allFlightsFromFirebaseSubject = new BehaviorSubject<Flight[]>(null);
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.authService.user.subscribe(
       data => {
         this.uid = data;
       }
     );
-
-    // // // //
-    // this.flights = [{
-    //   departure: 'Dubaï',
-    //   arrival: 'Amsterdam',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 4, 22, 9),
-    //   landingTime: new Date(2020, 4, 23, 13),
-    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // },
-    // {
-    //   departure: 'Dubaï',
-    //   arrival: 'Los Angeles',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 4, 22, 9),
-    //   landingTime: new Date(2020, 4, 23, 13),
-    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // },
-    // {
-    //   departure: 'Atlanta',
-    //   arrival: 'Chicago',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 4, 22, 9),
-    //   landingTime: new Date(2020, 4, 23, 13),
-    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // },
-    // {
-    //   departure: 'Tokyo',
-    //   arrival: 'Amsterdam',
-    //   flightNumber: 1,
-    //   departureTime: new Date(2020, 4, 22, 9),
-    //   landingTime: new Date(2020, 4, 23, 13),
-    //   dates: [new Date(2020, 4, 22), new Date(2020, 4, 29)],
-    //   flightTime: 4,
-    //   company: 'AirFrance',
-    //   noEscales: true
-    // }
-    // ];
-    // // // //
   }
-
-
-  // storeFlights() {
-  //   for (const flight of this.flights) {
-  //     const departure = flight.departureTime.toUTCString();
-  //     const landing = flight.landingTime.toUTCString();
-  //     const datesVol = flight.dates.toLocaleString();
-
-  //     firebase.database().ref('flights').push({
-  //       departure: flight.departure,
-  //       arrival: flight.arrival,
-  //       flightNumber: flight.flightNumber,
-  //       departureTime: departure,
-  //       landingTime: landing,
-  //       dates: datesVol,
-  //       company: flight.company,
-  //       noEscales: flight.noEscales
-  //     });
-  //   }
-  //   console.log('stored all flights')
-  // }
 
   // get all the flights from firebse, stores them in the BehaviorSubject, used by the flight service on app load
   getFlights() {
@@ -122,6 +55,22 @@ export class DataStorageService {
           prenom: passenger.prenom
         });
       console.log(passenger.nom + ' added');
+    });
+  }
+
+  createFlight(form) {
+    const departure = form.value.departureTime.toUTCString();
+    const landing = form.value.landingTime.toUTCString();
+    const datesVol = form.value.dates.toLocaleString();
+    const idcreated = firebase.database().ref('flights').push({
+      departure: form.value.departure,
+      arrival: form.value.arrival,
+      flightNumber: form.value.flightNumber,
+      departureTime: departure,
+      landingTime: landing,
+      dates: datesVol,
+      company: form.value.company,
+      noEscales: form.value.noEscale
     });
   }
 

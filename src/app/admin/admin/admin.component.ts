@@ -2,6 +2,7 @@ import { DataStorageService } from './../../services/data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import * as firebase from 'firebase';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -14,9 +15,13 @@ export class AdminComponent implements OnInit {
   flights = [];
   keysOfFlights = [];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+
 
     // this.dataService.storeFlights();
     this.emitFlights();
@@ -31,12 +36,15 @@ export class AdminComponent implements OnInit {
   }
 
   emitFlights() {
+    this.flights = [];
+    this.keysOfFlights = [];
     firebase.database().ref('flights').on('value', (snapshot) => {
       snapshot.forEach(elt => {
         this.flights.push(elt.val());
         this.keysOfFlights.push(elt.key);
       });
     });
+    console.log('flights emitted');
   }
 
   onDeleteFlight(index: number) {

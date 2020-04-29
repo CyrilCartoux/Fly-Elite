@@ -1,47 +1,50 @@
-<form>
+<h6 *ngIf="success">Vol ajouté avec succès !</h6>
+<form [formGroup]='addFlightForm' (submit)='onSubmitAddFlightForm()'>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="depart">Départ</label>
-            <input type="text" class="form-control" id="depart" placeholder="Départ">
+            <input type="text" class="form-control" formControlName="departure" id="depart" placeholder="Départ">
         </div>
         <div class="form-group col-md-6">
             <label for="arrivee">Arrivée</label>
-            <input type="text" class="form-control" id="arrivee" placeholder="Arrivée">
+            <input type="text" class="form-control" formControlName="arrival" id="arrivee" placeholder="Arrivée">
         </div>
     </div>
 
-    <div class="form-row">
-        <!-- <div class="form-group col-md-6">
-            <p-calendar formControlName="dates" name="rangeDates" selectionMode="range" [readonlyInput]="true">
-            </p-calendar>
-        </div> -->
+    <div class="form-row text-center">
+        <div class="form-group col-md-4">
+            <label for="calendar">Dates : </label>
+                <p-calendar name="rangeDates" formControlName="dates" id="calendar" selectionMode="range" [readonlyInput]="true">
+                </p-calendar>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="compagnie">Heure départ : </label>
+            <p-calendar formControlName="departureTime" name="date" [timeOnly]="true"></p-calendar>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="numVol">Heure arrivée : </label>
+            <p-calendar formControlName="landingTime" name="date1" [timeOnly]="true"></p-calendar>
+        </div>
     </div>
 
-    <div class="form-row offset-1">
-        <div class="form-group col-md-6">
-            <label for="compagnie">Heure départ</label>
-            <input type="text" class="form-control" id="compagnie">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="numVol">Heure arrivée</label>
-            <input type="text" class="form-control" id="numVol">
-        </div>
-    </div>
+    
+        
+    
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="compagnie">Compagnie</label>
-            <input type="text" class="form-control" id="compagnie">
+            <input type="text" formControlName="company" class="form-control" id="compagnie">
         </div>
-        <div class="form-group col-md-4">
-            <label for="inputState">Avec escales ?</label>
-            <select id="inputState" class="form-control">
-                <option selected>Sans escales</option>
-                <option>Avec escales</option>
-            </select>
+        <div class="form-group col-md-4 text-center">
+            <h6 class="first"><i class="fas fa-plane"></i> {{checked ? ' Vol direct' : ' Avec escale'}}
+            </h6>
+            <p-toggleButton formControlName="noEscale" [(ngModel)]='checked' name="escale"
+                [style]="{'width':'150px'}">
+            </p-toggleButton>
         </div>
         <div class="form-group col-md-2">
             <label for="numVol">Numéro vol</label>
-            <input type="text" class="form-control" id="numVol">
+            <input type="text" formControlName="flightNumber" class="form-control" id="numVol">
         </div>
     </div>
 
