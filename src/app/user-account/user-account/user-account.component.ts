@@ -22,15 +22,10 @@ export class UserAccountComponent implements OnInit {
     passengers: Users[];
     flightsOfUser = [];
     keysOfFlights = [];
+    userInfos;
 
     ngOnInit() {
         // get uid from connectedUser
-        this.authService.user.subscribe(data => {
-            this.uid = data;
-        });
-
-        this.emitFlights();
-
         this.items = [{
             label: 'Mes vols',
             items: [
@@ -44,6 +39,13 @@ export class UserAccountComponent implements OnInit {
                 { label: 'Annuler mes vols', icon: 'pi pi-trash', }
             ]
         }];
+
+        this.authService.user.subscribe(data => {
+            this.uid = data;
+        });
+
+        this.emitFlights();
+        this.getInfos();
     }
 
     // load the flights under the current user from firebase, store them in flightOfUser +
@@ -81,4 +83,9 @@ export class UserAccountComponent implements OnInit {
         }
     }
 
+    async getInfos() {
+        await this.dataService.getUserInfos(this.uid).then((data) => {
+            this.userInfos = data;
+        })
+    }
 }

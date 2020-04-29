@@ -78,12 +78,8 @@ export class DataStorageService {
       landingTime: landing,
       dates: datesVol,
       company: form.value.company,
-      noEscales: form.value.noEscale
+      noEscale: form.value.noEscale
     });
-  }
-
-  getFlightId() {
-    return this.flightId;
   }
 
   deleteAllFlightsOfUser(uid) {
@@ -111,6 +107,19 @@ export class DataStorageService {
       noEscale: noEscale,
       dates: datesVol
     })
+  }
+
+  async getUserInfos(uid) {
+    let email;
+    let nom;
+    let prenom;
+    console.log(uid),
+      await firebase.database().ref('users').child(uid).once('value', (snapshot) => {
+        email = snapshot.val().email;
+        nom = snapshot.val().nom;
+        prenom = snapshot.val().prenom;
+      });
+    return [email, nom, prenom];
   }
 
 }
