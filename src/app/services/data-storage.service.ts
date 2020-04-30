@@ -27,16 +27,23 @@ export class DataStorageService {
         this.uid = data;
       }
     );
+    this.allFlightsFromFirebaseSubject.subscribe(flights => {
+      this.flights = flights;
+    });
   }
 
   // get all the flights from firebse, stores them in the BehaviorSubject, used by the flight service on app load
-  async getFlights() {
-    const query = firebase.database().ref('flights');
-    await query.on('value', (snapshot) => {
-      this.allFlightsFromFirebaseSubject.next(Object.values(snapshot.val()));
-      snapshot.forEach(elt => {
-        this.allKeysOfFlightsFromFirebase.push(elt.key);
-      });
+  getFlights() {
+    firebase.database().ref('flights').on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        this.allFlightsFromFirebaseSubject.next(Object.values(snapshot.val()));
+        snapshot.forEach(elt => {
+          this.allKeysOfFlightsFromFirebase.push(elt.key);
+        });
+      } else {
+        this.allFlightsFromFirebaseSubject.next(null);
+        this.allKeysOfFlightsFromFirebase = [];
+      }
     });
   }
 
@@ -85,6 +92,19 @@ export class DataStorageService {
   deleteAllFlightsOfUser(uid) {
     firebase.database().ref('users').child(uid).child('flights').remove().then(() => {
       console.log('deleted');
+    });
+  }
+
+  async deleteFlight(index) {
+    const key = this.allKeysOfFlightsFromFirebase[index];
+    await firebase.database().ref('flights').child(key).remove().then(() => {
+      this.getFlights();
+    });
+  }
+
+  async deleteAllFlights() {
+    await firebase.database().ref('flights').remove().then(() => {
+      this.allFlightsFromFirebaseSubject.next(this.flights);
     });
   }
 

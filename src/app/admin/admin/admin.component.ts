@@ -1,7 +1,7 @@
 import { DataStorageService } from './../../services/data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
-import * as firebase from 'firebase';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin',
@@ -15,12 +15,13 @@ export class AdminComponent implements OnInit {
   keysOfFlights = [];
 
   constructor(
-    private dataService: DataStorageService
+    private dataService: DataStorageService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
-
     this.dataService.allFlightsFromFirebaseSubject.subscribe((flights) => {
+      this.flights = [];
       this.flights = flights;
     });
     this.keysOfFlights = this.dataService.getKeysOfFlights();
@@ -35,14 +36,31 @@ export class AdminComponent implements OnInit {
   }
 
   onDeleteFlight(index: number) {
-    const key = this.keysOfFlights[index];
-    firebase.database().ref('flights').child(key).remove()
-      .then(() => {
-        this.dataService.allFlightsFromFirebaseSubject.subscribe((flights) => {
-          this.flights = flights;
-          this.keysOfFlights = this.dataService.getKeysOfFlights();
-        });
-      });
+    this.dataService.deleteFlight(index).then(() => {
+      this.dataService.allFlightsFromFirebaseSubject.subscribe(flights => {
+        this.flights = flights;
+        this.showSuccess();
+      }).unsubscribe();
+    }).catch(error => {
+      this.showError(error.message);
+    });
   }
 
+  async deleteAllFlights() {
+    await this.dataService.deleteAllFlights().then(() => {
+      this.dataService.allFlightsFromFirebaseSubject.subscribe(flights => {
+        this.flights = flights;
+        this.showSuccess();
+      }).unsubscribe();
+    }).catch(error => {
+      this.showError(error.message);
+    });
+  }
+
+  showSuccess() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Succès ', detail: 'Vol supprimé !' });
+}
+showError(message) {
+    this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error ', detail: message });
+}
 }

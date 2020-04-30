@@ -49,18 +49,15 @@ export class FlightService {
     this.userFlightForm = flightToSearch;
 
     this.flights.forEach((elt: Flight) => {
-
       if (JSON.stringify(this.transformFlightInfos(elt)) === JSON.stringify(this.transformFlightInfos(flightToSearch))) {
-        // on vide l'array sinon si on veux ajouter plusieurs vols sur la même session il propose la liste des anciens vols
-        this.flightsFounded = [];
         this.flightsFounded.push(elt);
       }
-
     });
 
     if (this.flightsFounded.length === 0) {
       return false;
     } else {
+      console.log(this.flightsFounded);
       return true;
     }
   }

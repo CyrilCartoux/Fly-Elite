@@ -18,8 +18,8 @@
             <div class="row m-0 d-flex justify-content-around">
                 <div class="col-2">
                     <h6>Horaires : </h6>
-                    <p>Départ : {{ flight.departureTime | date:'dd/MM HH:mm'}}</p>
-                    <p>Arrivée : {{ flight.landingTime | date:'dd/MM HH:mm'}} </p>
+                    <p>Départ : {{ flight.departure }} - {{ flight.departureTime | date:'HH:mm'}} </p>
+                    <p>Arrivée : {{ flight.arrival }} - {{ flight.landingTime | date:'HH:mm'}} </p>
                 </div>
                 <div class="col-4 text-center">
                     <h6>Départ : </h6>

@@ -46,11 +46,11 @@
                     <div class="col-12 p-1">
                         <i class="fas fa-arrow-right fa-2x"></i> <span> Votre départ : Aéroport de
                             {{ flight.departure }} le
-                            {{ flight.departureTime | date:'dd/MM HH:mm' }}. </span>
+                            {{ flight.dates[0] }} à {{ flight.departureTime | date:'HH:mm'}}. </span>
                     </div>
                     <div class="col-12 p-1">
                         <i class="fas fa-arrow-right fa-2x"></i><span> Votre arrivée : - {{ flight.arrival }} le
-                            {{ flight.landingTime | date:'dd/MM HH:mm' }} </span>
+                            {{ flight.dates[1] }} à {{ flight.landingTime | date:'HH:mm'}} </span>
                     </div>
                     <div class="col-12 p-1" *ngIf="flight.noEscale">
                         <i class="fas fa-plane"></i> Vol direct

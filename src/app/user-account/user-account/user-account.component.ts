@@ -53,12 +53,23 @@ export class UserAccountComponent implements OnInit {
     // load the flights under the current user from firebase, store them in flightOfUser +
     // load the flights keys from the current user, store the in keysOfFlights
     emitFlights() {
+        const dates = [];
+        const flights = [];
         firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
             snapshot.forEach(elt => {
-                this.flightsOfUser.push(elt.val());
+                const date = elt.val().dates;
+                dates.push(date.split(','));
+                flights.push(elt.val());
+                for (const flight of flights) {
+                    for ( const day of dates ) {
+                        flight.dates = day;
+                    }
+                }
                 this.keysOfFlights.push(elt.key);
             });
         });
+        this.flightsOfUser = flights;
+        console.log(this.flightsOfUser);
     }
 
     // get the index of flight, search the flight key associated to it, then delete it
