@@ -2,7 +2,7 @@ import { FlightService } from './../../services/flight.service';
 import { Category } from './../../interfaces/category';
 import { Component, OnInit } from '@angular/core';
 import { Airport } from 'src/app/interfaces/airport';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -72,12 +72,12 @@ export class SearchFlightComponent implements OnInit {
 
     // Formulaire :
     this.flightForm = new FormGroup({
-      departure: new FormControl(),
-      arrival: new FormControl(),
-      dates: new FormControl(),
-      nbrePersonne: new FormControl(),
-      noEscale: new FormControl(),
-      category: new FormControl()
+      departure: new FormControl('', Validators.required),
+      arrival: new FormControl('', Validators.required),
+      dates: new FormControl('', Validators.required),
+      nbrePersonne: new FormControl('', Validators.required),
+      noEscale: new FormControl('', Validators.required),
+      category: new FormControl('', Validators.required)
     });
 
 

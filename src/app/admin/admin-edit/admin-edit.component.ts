@@ -2,7 +2,7 @@ import { DataStorageService } from './../../services/data-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Flight } from 'src/app/interfaces/flight';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-edit',
@@ -46,14 +46,14 @@ export class AdminEditComponent implements OnInit {
 
 
     this.editFlightForm = new FormGroup({
-      departure: new FormControl(),
-      arrival: new FormControl(),
-      dates: new FormControl(),
-      departureTime: new FormControl(),
-      landingTime: new FormControl(),
-      company: new FormControl(),
-      noEscale: new FormControl(),
-      flightNumber: new FormControl()
+      departure: new FormControl('', Validators.required),
+      arrival: new FormControl('', Validators.required),
+      dates: new FormControl('', Validators.required),
+      departureTime: new FormControl('', Validators.required),
+      landingTime: new FormControl('', Validators.required),
+      company: new FormControl('', Validators.required),
+      noEscale: new FormControl('', Validators.required),
+      flightNumber: new FormControl('', Validators.required)
     });
 
     this.initForm();

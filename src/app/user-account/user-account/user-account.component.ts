@@ -86,6 +86,6 @@ export class UserAccountComponent implements OnInit {
     async getInfos() {
         await this.dataService.getUserInfos(this.uid).then((data) => {
             this.userInfos = data;
-        })
+        });
     }
 }

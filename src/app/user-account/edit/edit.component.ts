@@ -1,7 +1,7 @@
 import { DataStorageService } from './../../services/data-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from './../../interfaces/category';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Airport } from 'src/app/interfaces/airport';
 
@@ -38,16 +38,16 @@ export class EditComponent implements OnInit {
 
     this.route.paramMap.subscribe(
       (res) => {
-        this.idToEdit = res.get('id');
+        this.idToEdit = +res.get('id');
       }
     );
 
     this.editFlightForm = new FormGroup({
-      departure: new FormControl(),
-      arrival: new FormControl(),
-      dates: new FormControl(),
-      category: new FormControl(),
-      noEscale: new FormControl(),
+      departure: new FormControl('', Validators.required),
+      arrival: new FormControl('', Validators.required),
+      dates: new FormControl('', Validators.required),
+      category: new FormControl('', Validators.required),
+      noEscale: new FormControl('', Validators.required),
     });
     this.airports = [
       { label: 'LAX', value: 'Los Angeles' },

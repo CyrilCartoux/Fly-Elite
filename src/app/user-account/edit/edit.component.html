@@ -1,6 +1,6 @@
 <h4 class="alert alert-success" *ngIf="success">Vol modifié avec succès !</h4>
 <div class="text-center">
-    <h3 class="m-1 mb-4">Editer vol : </h3>
+    <h3 class="m-1 mb-4">Editer vol {{idToEdit+1}} : </h3>
 </div>
 
 <hr style="background-color: white; width: 200px;">
@@ -56,6 +56,6 @@
             </p-toggleButton>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary m-3 btn-lg"> Modifier </button>
+    <button type="submit" [disabled]="editFlightForm.invalid" class="btn btn-primary m-3 btn-lg"> Modifier </button>
 </form>
 <hr style="background-color: white;">
