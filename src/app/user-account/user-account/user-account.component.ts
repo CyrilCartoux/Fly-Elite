@@ -4,6 +4,7 @@ import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import * as firebase from 'firebase';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-user-account',
@@ -14,7 +15,8 @@ export class UserAccountComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private dataService: DataStorageService
+        private dataService: DataStorageService,
+        private messageService: MessageService
     ) { }
 
     items: MenuItem[];
@@ -67,9 +69,12 @@ export class UserAccountComponent implements OnInit {
             () => {
                 this.flightsOfUser = [];
                 this.keysOfFlights = [];
+                this.showSuccess();
                 this.emitFlights();
             }
-        );
+        ).catch(error => {
+            this.showError(error.message);
+        });
     }
 
     onDeleteAllFlights(e) {
@@ -87,5 +92,12 @@ export class UserAccountComponent implements OnInit {
         await this.dataService.getUserInfos(this.uid).then((data) => {
             this.userInfos = data;
         });
+    }
+
+    showSuccess() {
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Succès ', detail: 'Vol supprimé !' });
+    }
+    showError(message) {
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error ', detail: message });
     }
 }

@@ -2,7 +2,6 @@ import { DataStorageService } from './../../services/data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import * as firebase from 'firebase';
-import { Router, ActivatedRoute, NavigationEnd, Data } from '@angular/router';
 
 @Component({
   selector: 'app-admin',

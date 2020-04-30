@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { DataStorageService } from './../../services/data-storage.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -26,7 +26,7 @@ export class AddComponent implements OnInit {
 
   constructor(
     private dataStorage: DataStorageService,
-    private router: Router
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -73,13 +73,19 @@ export class AddComponent implements OnInit {
   }
 
   onSubmitAddFlightForm() {
-    this.dataStorage.createFlight(this.addFlightForm);
-    this.success = true;
+    this.dataStorage.createFlight(this.addFlightForm).then(() => {
+      this.showSuccess();
+    }).catch(error => {
+      this.showError(error.message);
+    });
     this.addFlightForm.reset();
-    setTimeout(() => {
-      this.success = false;
-      this.router.navigate(['/admin']);
-    }, 2000);
+  }
+
+  showSuccess() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Succès ', detail: 'Vol enregistré !' });
+  }
+  showError(message) {
+    this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error ', detail: message });
   }
 
 }

@@ -1,4 +1,4 @@
-<h4 class="alert alert-success" *ngIf="success">Vol modifié avec succès !</h4>
+<p-toast [showTransformOptions]="'translateX(50%)'" position="top-center" key="tc"></p-toast>
 <div class="text-center">
     <h3 class="m-1 mb-4">Modifier vol {{idToEdit+1}} : </h3>
 </div>
@@ -19,8 +19,9 @@
     <div class="form-row text-center">
         <div class="form-group col-md-4">
             <label for="calendar">Dates : </label>
-                <p-calendar name="rangeDates" formControlName="dates" id="calendar" selectionMode="range" [readonlyInput]="true">
-                </p-calendar>
+            <p-calendar name="rangeDates" formControlName="dates" id="calendar" selectionMode="range"
+                [readonlyInput]="true">
+            </p-calendar>
         </div>
         <div class="form-group col-md-4">
             <label for="compagnie">Heure départ : </label>
@@ -32,9 +33,6 @@
         </div>
     </div>
 
-    
-        
-    
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="compagnie">Compagnie</label>
@@ -43,8 +41,7 @@
         <div class="form-group col-md-4 text-center">
             <h6 class="first"><i class="fas fa-plane"></i> {{checked ? ' Vol direct' : ' Avec escale'}}
             </h6>
-            <p-toggleButton formControlName="noEscale" [(ngModel)]='checked' name="escale"
-                [style]="{'width':'150px'}">
+            <p-toggleButton formControlName="noEscale" [(ngModel)]='checked' name="escale" [style]="{'width':'150px'}">
             </p-toggleButton>
         </div>
         <div class="form-group col-md-2">

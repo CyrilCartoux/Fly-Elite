@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'account', component: UserAccountComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'edit/:id', component: EditComponent}
+      { path: 'edit/:id', component: EditComponent }
     ]
   },
   {

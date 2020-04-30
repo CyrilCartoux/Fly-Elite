@@ -19,7 +19,7 @@ export class SearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
     // load all the flights that matches the user research to display them
-    this.flights =  this.flightService.getFoundedFlights();
+    this.flights = this.flightService.getFoundedFlights();
   }
 
   onSelectFlight(index: number) {

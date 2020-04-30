@@ -67,7 +67,6 @@ export class SearchFlightComponent implements OnInit {
     ];
   }
 
-
   ngOnInit() {
 
     // Formulaire :
@@ -79,7 +78,6 @@ export class SearchFlightComponent implements OnInit {
       noEscale: new FormControl('', Validators.required),
       category: new FormControl('', Validators.required)
     });
-
 
     // Calendrier :
     this.es = {
@@ -120,6 +118,5 @@ export class SearchFlightComponent implements OnInit {
       alert('Nous n\'avons pas trouvé de vols correspondants a votre recheche ...');
     }
   }
-
 
 }

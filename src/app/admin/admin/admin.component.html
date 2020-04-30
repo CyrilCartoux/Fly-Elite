@@ -5,18 +5,17 @@
 
         <div class="col-3">
             <div class="container p-3">
-
                 <div class="list-group">
                     <a routerLink="add" class="list-group-item list-group-item-action list-group-item-primary"><i
-                        class="fas fa-plus"> </i> Ajouter un vol</a>
+                            class="fas fa-plus"> </i> Ajouter un vol</a>
                 </div>
-
             </div>
         </div>
         <div class="col-9">
             <router-outlet></router-outlet>
             <h3>Liste des vols :</h3>
-            <div class="container-flight mb-3 p-2" style="border: 1px solid grey;" *ngFor="let flight of flights; let i = index">
+            <div class="container-flight mb-3 p-2" style="border: 1px solid grey;"
+                *ngFor="let flight of flights; let i = index">
                 <div>
                     <h4>Vol {{i+1}} :
                         <button class="btn btn-danger m-1" (click)="onDeleteFlight(i)">
@@ -27,7 +26,6 @@
                         </a>
                     </h4>
                 </div>
-
 
                 <div class="row m-0">
                     <div class="col-3 p-1">
@@ -45,7 +43,6 @@
                     <div class="col-2 p-1" *ngIf="!flight.noEscale">
                         <i class="fas fa-plane"></i> Vol AVEC escales
                     </div>
-
 
                     <div class="col-2">
                         <div>

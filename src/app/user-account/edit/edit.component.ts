@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { DataStorageService } from './../../services/data-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from './../../interfaces/category';
@@ -31,7 +32,8 @@ export class EditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataStorageService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -101,12 +103,21 @@ export class EditComponent implements OnInit {
 
   onSubmitEditFlightForm() {
     console.log(this.editFlightForm.value);
-    this.dataService.editFlightOfUser(this.idToEdit, this.editFlightForm);
-    this.success = true;
+    this.dataService.editFlightOfUser(this.idToEdit, this.editFlightForm).then(() => {
+      this.showSuccess();
+    }).catch(error => {
+      this.showError(error.message);
+    });
     setTimeout(() => {
-      this.success = false;
       this.router.navigate(['search']);
-    }, 1500);
+    }, 2000);
+  }
+
+  showSuccess() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Succès ', detail: 'Modification effectuée !' });
+  }
+  showError(message) {
+    this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error ', detail: message });
   }
 
 }

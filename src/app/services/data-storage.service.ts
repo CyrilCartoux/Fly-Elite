@@ -30,9 +30,9 @@ export class DataStorageService {
   }
 
   // get all the flights from firebse, stores them in the BehaviorSubject, used by the flight service on app load
-  getFlights() {
+  async getFlights() {
     const query = firebase.database().ref('flights');
-    query.on('value', (snapshot) => {
+    await query.on('value', (snapshot) => {
       this.allFlightsFromFirebaseSubject.next(Object.values(snapshot.val()));
       snapshot.forEach(elt => {
         this.allKeysOfFlightsFromFirebase.push(elt.key);
@@ -50,8 +50,8 @@ export class DataStorageService {
     return this.flightId;
   }
 
-  storeUsers(passengers: Users[], uid, flightUid) {
-    passengers.forEach(passenger => {
+  async storeUsers(passengers: Users[], uid, flightUid) {
+    await passengers.forEach(passenger => {
       firebase.database()
         .ref('users')
         .child(uid)
@@ -66,11 +66,11 @@ export class DataStorageService {
     });
   }
 
-  createFlight(form) {
+  async createFlight(form) {
     const departure = form.value.departureTime.toUTCString();
     const landing = form.value.landingTime.toUTCString();
     const datesVol = form.value.dates.toLocaleString();
-    firebase.database().ref('flights').push({
+    await firebase.database().ref('flights').push({
       departure: form.value.departure,
       arrival: form.value.arrival,
       flightNumber: form.value.flightNumber,
@@ -88,11 +88,11 @@ export class DataStorageService {
     });
   }
 
-  editFlight(key, form) {
+  async editFlight(key, form) {
     const departure = form.value.departureTime.toUTCString();
     const landing = form.value.landingTime.toUTCString();
     const datesVol = form.value.dates.toLocaleString();
-    firebase.database().ref('flights').child(key).update({
+    await firebase.database().ref('flights').child(key).update({
       departure: form.value.departure,
       arrival: form.value.arrival,
       flightNumber: form.value.flightNumber,
@@ -105,19 +105,19 @@ export class DataStorageService {
     console.log(key + ' is updated');
   }
 
-  editFlightOfUser(index, form) {
+  async editFlightOfUser(index, form) {
     const departure = form.value.departure;
     const arrival = form.value.arrival;
     const category = form.value.category.name;
     const noEscale = form.value.noEscale;
     const datesVol = form.value.dates.toLocaleString();
-    firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
+    await firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
       snapshot.forEach(elt => {
         this.allFlightKeyOfUser.push(elt.key);
       });
     });
     const key = this.allFlightKeyOfUser[index];
-    firebase.database().ref('users').child(this.uid).child('flights').child(key).update({
+    await firebase.database().ref('users').child(this.uid).child('flights').child(key).update({
       departure: departure,
       arrival: arrival,
       category: category,

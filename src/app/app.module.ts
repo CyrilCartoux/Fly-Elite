@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CardModule } from 'primeng/card';
 import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -23,7 +25,6 @@ import { CheckInComponent } from './check-in/check-in.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { AlertComponent } from './shared/alert/alert.component';
 import { UserAccountComponent } from './user-account/user-account/user-account.component';
 import { EditComponent } from './user-account/edit/edit.component';
 import { AdminComponent } from './admin/admin/admin.component';
@@ -41,7 +42,6 @@ import { AdminEditComponent } from './admin/admin-edit/admin-edit.component';
     BookFlightComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    AlertComponent,
     UserAccountComponent,
     EditComponent,
     AdminComponent,
@@ -61,9 +61,10 @@ import { AdminEditComponent } from './admin/admin-edit/admin-edit.component';
     ReactiveFormsModule,
     DropdownModule,
     CardModule,
-    MenuModule
+    MenuModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

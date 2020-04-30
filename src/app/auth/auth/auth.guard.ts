@@ -24,10 +24,8 @@ export class AuthGuard implements CanActivate {
             map(user => {
                 const isAuth = user ? true : false;
                 if (isAuth) {
-                    console.log('permission ok');
                     return true;
                 } else {
-                    console.log('no permission, redirected to auth');
                     this.router.navigate(['/auth']);
                 }
             }
