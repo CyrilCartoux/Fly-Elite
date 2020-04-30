@@ -88,6 +88,23 @@ export class DataStorageService {
     });
   }
 
+  editFlight(key, form) {
+    const departure = form.value.departureTime.toUTCString();
+    const landing = form.value.landingTime.toUTCString();
+    const datesVol = form.value.dates.toLocaleString();
+    firebase.database().ref('flights').child(key).update({
+      departure: form.value.departure,
+      arrival: form.value.arrival,
+      flightNumber: form.value.flightNumber,
+      departureTime: departure,
+      landingTime: landing,
+      dates: datesVol,
+      company: form.value.company,
+      noEscale: form.value.noEscale
+    });
+    console.log(key + ' is updated');
+  }
+
   editFlightOfUser(index, form) {
     const departure = form.value.departure;
     const arrival = form.value.arrival;

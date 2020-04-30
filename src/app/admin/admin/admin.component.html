@@ -22,7 +22,7 @@
                         <button class="btn btn-danger m-1" (click)="onDeleteFlight(i)">
                             <i class="far fa-trash-alt"></i>
                         </button>
-                        <a class="btn btn-primary m-1" routerLink="edit">
+                        <a class="btn btn-primary m-1" [routerLink]="['edit', i]">
                             <i class="far fa-edit"></i>
                         </a>
                     </h4>

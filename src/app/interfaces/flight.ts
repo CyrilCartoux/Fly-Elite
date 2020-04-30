@@ -10,5 +10,5 @@ export interface Flight {
 
     flightTime?: number;
     company?: string;
-    noEscales?: boolean;
+    noEscale?: boolean;
 }

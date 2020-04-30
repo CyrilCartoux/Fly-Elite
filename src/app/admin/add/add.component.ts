@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DataStorageService } from './../../services/data-storage.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +25,8 @@ export class AddComponent implements OnInit {
   success = false;
 
   constructor(
-    private dataStorage: DataStorageService
+    private dataStorage: DataStorageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -76,7 +78,8 @@ export class AddComponent implements OnInit {
     this.addFlightForm.reset();
     setTimeout(() => {
       this.success = false;
-    }, 3000);
+      this.router.navigate(['/admin']);
+    }, 2000);
   }
 
 }
