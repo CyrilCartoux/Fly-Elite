@@ -46,6 +46,7 @@ export class FlightService {
 
   // match flights between user research and flights in database :
   findFlight(flightToSearch: FlightToSearch): boolean {
+    this.flightsFounded = [];
     this.userFlightForm = flightToSearch;
 
     this.flights.forEach((elt: Flight) => {
