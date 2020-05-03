@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +17,8 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -30,17 +32,37 @@ export class AuthComponent implements OnInit {
     this.isLoading = true;
 
     if (this.isLoginMode) {
-
-      this.authService.signIn(form);
-      this.isLoading = false;
-      this.router.navigate(['search']);
+      this.authService.signIn(form).then(() => {
+        this.isLoading = false;
+        this.showSuccess();
+        setTimeout(() => {
+          this.router.navigate(['search']);
+        }, 1500);
+      }).catch(e => {
+        this.isLoading = false;
+        this.showError(e.message);
+      });
     } else {
-      this.authService.signUp(form);
-      this.isLoading = false;
-      this.router.navigate(['search']);
+      this.authService.signUp(form).then(() => {
+        this.isLoading = false;
+        this.showSuccess();
+        setTimeout(() => {
+          this.router.navigate(['search']);
+        }, 1500);
+      }).catch(e => {
+        this.isLoading = false;
+        this.showError(e.message);
+      });
     }
 
     form.reset();
+  }
+
+  showSuccess() {
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Succès ', detail: 'Connecté !' });
+  }
+  showError(message) {
+    this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error ', detail: message });
   }
 
 }

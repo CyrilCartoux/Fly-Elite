@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { FlightService } from './../../services/flight.service';
 import { Category } from './../../interfaces/category';
 import { Component, OnInit } from '@angular/core';
@@ -43,7 +44,8 @@ export class SearchFlightComponent implements OnInit {
 
   constructor(
     private flightService: FlightService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.airports = [
       { label: 'LAX', value: 'Los Angeles' },
@@ -115,8 +117,13 @@ export class SearchFlightComponent implements OnInit {
       this.foundflight = true;
       this.router.navigate(['search/results']);
     } else {
-      alert('Nous n\'avons pas trouvé de vols correspondants a votre recheche ...');
+      this.showError();
     }
+  }
+
+  showError() {
+    this.messageService.add({ key: 'tc', severity: 'error', summary: 'C\'est embarassant ... ',
+    detail: ' Aucuns vols ne correspondent à votre recherche !' });
   }
 
 }

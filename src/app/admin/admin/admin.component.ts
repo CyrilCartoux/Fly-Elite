@@ -59,8 +59,8 @@ export class AdminComponent implements OnInit {
 
   showSuccess() {
     this.messageService.add({ key: 'tc', severity: 'success', summary: 'Succès ', detail: 'Vol supprimé !' });
-}
-showError(message) {
+  }
+  showError(message) {
     this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error ', detail: message });
-}
+  }
 }
