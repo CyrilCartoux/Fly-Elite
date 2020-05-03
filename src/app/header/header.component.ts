@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-header',
@@ -30,12 +31,15 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.user.next(null);
-    this.successLogOut = true;
-    this.router.navigate(['search']);
-    setTimeout(() => {
-      this.successLogOut = false;
-    }, 500);
+    firebase.auth().signOut().then(() => {
+      this.authService.user.next(null);
+      this.successLogOut = true;
+      this.router.navigate(['search']);
+      setTimeout(() => {
+        this.successLogOut = false;
+      }, 500);
+    });
+
   }
 
 }
