@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,7 +12,8 @@ export class CheckInComponent implements OnInit {
   checkInForm: FormGroup;
 
   constructor(
-    private formbuilder: FormBuilder
+    private formbuilder: FormBuilder,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +26,16 @@ export class CheckInComponent implements OnInit {
 
   onSubmitCheckInForm() {
     console.log(this.checkInForm.value);
+    this.showSuccess(this.checkInForm.value);
+  }
+
+  showSuccess(user) {
+    this.messageService.add({
+      key: 'tc',
+      severity: 'success',
+      summary: `Mr ${user.nom}`,
+      detail: `Vol ${user.flightNumber} : Enregistrement effectué !`
+    });
   }
 
 }
