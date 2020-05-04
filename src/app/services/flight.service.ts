@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 })
 export class FlightService {
 
+  // liste des vols
   flights: Flight[] = [];
 
   // vols correspondants a la recherche :
@@ -58,7 +59,6 @@ export class FlightService {
     if (this.flightsFounded.length === 0) {
       return false;
     } else {
-      console.log(this.flightsFounded);
       return true;
     }
   }

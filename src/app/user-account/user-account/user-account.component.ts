@@ -27,7 +27,6 @@ export class UserAccountComponent implements OnInit {
     userInfos;
 
     ngOnInit() {
-        // get uid from connectedUser
         this.items = [{
             label: 'Mes vols',
             items: [
@@ -41,7 +40,7 @@ export class UserAccountComponent implements OnInit {
                 { label: 'Annuler mes vols', icon: 'pi pi-trash', }
             ]
         }];
-
+        // get uid from connectedUser
         this.authService.user.subscribe(data => {
             this.uid = data;
         });
@@ -61,7 +60,7 @@ export class UserAccountComponent implements OnInit {
                 dates.push(date.split(','));
                 flights.push(elt.val());
                 for (const flight of flights) {
-                    for ( const day of dates ) {
+                    for (const day of dates) {
                         flight.dates = day;
                     }
                 }

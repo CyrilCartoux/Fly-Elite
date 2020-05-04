@@ -40,8 +40,6 @@ export class SearchFlightComponent implements OnInit {
   // Formulaire:
   flightForm: FormGroup;
 
-
-
   constructor(
     private flightService: FlightService,
     private router: Router,
@@ -122,8 +120,12 @@ export class SearchFlightComponent implements OnInit {
   }
 
   showError() {
-    this.messageService.add({ key: 'tc', severity: 'error', summary: 'C\'est embarassant ... ',
-    detail: ' Aucuns vols ne correspondent à votre recherche !' });
+    this.messageService.add({
+      key: 'tc',
+      severity: 'error',
+      summary: 'C\'est embarassant ... ',
+      detail: ' Aucuns vols ne correspondent à votre recherche !'
+    });
   }
 
 }

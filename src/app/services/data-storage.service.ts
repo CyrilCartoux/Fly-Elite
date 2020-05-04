@@ -22,25 +22,30 @@ export class DataStorageService {
   constructor(
     private authService: AuthService
   ) {
+    // store the user id
     this.authService.user.subscribe(
       data => {
         this.uid = data;
       }
     );
+    // load all the flights from firebase
     this.allFlightsFromFirebaseSubject.subscribe(flights => {
       this.flights = flights;
     });
   }
 
-  // get all the flights from firebse, stores them in the BehaviorSubject, used by the flight service on app load
+  // get all the flights from firebase, stores them in the BehaviorSubject, used by the flight service on app load
   getFlights() {
     firebase.database().ref('flights').on('value', (snapshot) => {
       if (snapshot.exists()) {
+        // have to use Object.values here to transform data into an array
         this.allFlightsFromFirebaseSubject.next(Object.values(snapshot.val()));
         snapshot.forEach(elt => {
+          // load all the keys and stores them
           this.allKeysOfFlightsFromFirebase.push(elt.key);
         });
       } else {
+        // no more flights in firebase so empty everything
         this.allFlightsFromFirebaseSubject.next(null);
         this.allKeysOfFlightsFromFirebase = [];
       }
@@ -57,6 +62,7 @@ export class DataStorageService {
     return this.flightId;
   }
 
+  // stores the users from check-in component under the current flight of signed in user
   async storeUsers(passengers: Users[], uid, flightUid) {
     await passengers.forEach(passenger => {
       firebase.database()
@@ -69,11 +75,12 @@ export class DataStorageService {
           nom: passenger.nom,
           prenom: passenger.prenom
         });
-      console.log(passenger.nom + ' added');
     });
   }
 
+  // receives a form then create flight in firebase, used by the admin-add component
   async createFlight(form) {
+    // need to transform some data
     const departure = form.value.departureTime.toUTCString();
     const landing = form.value.landingTime.toUTCString();
     const datesVol = form.value.dates.toLocaleString();
@@ -90,12 +97,14 @@ export class DataStorageService {
   }
 
   deleteAllFlightsOfUser(uid) {
-    firebase.database().ref('users').child(uid).child('flights').remove().then(() => {
-      console.log('deleted');
+    firebase.database().ref('users').child(uid).child('flights').remove().catch((error) => {
+      console.log(error.message);
     });
   }
 
+  // delete the flight at index , then reload the flights from firebase to update the view
   async deleteFlight(index) {
+    // need to load all the keys then get the flight at key index
     const key = this.allKeysOfFlightsFromFirebase[index];
     await firebase.database().ref('flights').child(key).remove().then(() => {
       this.getFlights();
@@ -108,6 +117,7 @@ export class DataStorageService {
     });
   }
 
+  // take the flight key to edit and the form. Then update firebase with new data
   async editFlight(key, form) {
     const departure = form.value.departureTime.toUTCString();
     const landing = form.value.landingTime.toUTCString();
@@ -131,11 +141,14 @@ export class DataStorageService {
     const category = form.value.category.name;
     const noEscale = form.value.noEscale;
     const datesVol = form.value.dates.toLocaleString();
+    // need to load all the flights from the current user
     await firebase.database().ref('users').child(this.uid).child('flights').on('value', (snapshot) => {
       snapshot.forEach(elt => {
+        // load all the flights keys
         this.allFlightKeyOfUser.push(elt.key);
       });
     });
+    // get the flight at edit index
     const key = this.allFlightKeyOfUser[index];
     await firebase.database().ref('users').child(this.uid).child('flights').child(key).update({
       departure: departure,
@@ -143,19 +156,19 @@ export class DataStorageService {
       category: category,
       noEscale: noEscale,
       dates: datesVol
-    })
+    });
   }
 
+  // load the current user infos to display in account
   async getUserInfos(uid) {
     let email;
     let nom;
     let prenom;
-    console.log(uid),
-      await firebase.database().ref('users').child(uid).once('value', (snapshot) => {
-        email = snapshot.val().email;
-        nom = snapshot.val().nom;
-        prenom = snapshot.val().prenom;
-      });
+    await firebase.database().ref('users').child(uid).once('value', (snapshot) => {
+      email = snapshot.val().email;
+      nom = snapshot.val().nom;
+      prenom = snapshot.val().prenom;
+    });
     return [email, nom, prenom];
   }
 

@@ -37,7 +37,7 @@ export class AuthComponent implements OnInit {
         this.showSuccess();
         setTimeout(() => {
           this.router.navigate(['search']);
-        }, 1500);
+        }, 1000);
       }).catch(e => {
         this.isLoading = false;
         this.showError(e.message);
@@ -48,7 +48,7 @@ export class AuthComponent implements OnInit {
         this.showSuccess();
         setTimeout(() => {
           this.router.navigate(['search']);
-        }, 1500);
+        }, 1000);
       }).catch(e => {
         this.isLoading = false;
         this.showError(e.message);

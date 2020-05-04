@@ -20,10 +20,12 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // load all the flights from firebase
     this.dataService.allFlightsFromFirebaseSubject.subscribe((flights) => {
       this.flights = [];
       this.flights = flights;
     });
+    // load the unique keys of flights
     this.keysOfFlights = this.dataService.getKeysOfFlights();
 
     this.items = [
